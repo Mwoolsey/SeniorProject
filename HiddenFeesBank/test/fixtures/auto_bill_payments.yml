@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  originAcctNumber: 1
+  destinationAcctNumber: 1
+  amount: 9.99
+  businessName: MyString
+  businessAddress: MyString
+  dateToPay: 2017-02-18
+  account: one
+
+two:
+  originAcctNumber: 1
+  destinationAcctNumber: 1
+  amount: 9.99
+  businessName: MyString
+  businessAddress: MyString
+  dateToPay: 2017-02-18
+  account: two

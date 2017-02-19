@@ -1,0 +1,2 @@
+json.extract! auto_bill_payment, :id, :originAcctNumber, :destinationAcctNumber, :amount, :businessName, :businessAddress, :dateToPay, :account_id, :created_at, :updated_at
+json.url auto_bill_payment_url(auto_bill_payment, format: :json)

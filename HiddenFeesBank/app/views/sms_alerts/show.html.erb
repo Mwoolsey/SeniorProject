@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Alerttype:</strong>
+  <%= @sms_alert.alertType %>
+</p>
+
+<p>
+  <strong>Frequency:</strong>
+  <%= @sms_alert.frequency %>
+</p>
+
+<p>
+  <strong>Account:</strong>
+  <%= @sms_alert.account %>
+</p>
+
+<%= link_to 'Edit', edit_sms_alert_path(@sms_alert) %> |
+<%= link_to 'Back', sms_alerts_path %>

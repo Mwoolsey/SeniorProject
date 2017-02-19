@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Originacctnumber:</strong>
+  <%= @outgoing_transfer.originAcctNumber %>
+</p>
+
+<p>
+  <strong>Destinationacctnumber:</strong>
+  <%= @outgoing_transfer.destinationAcctNumber %>
+</p>
+
+<p>
+  <strong>Routingnumber:</strong>
+  <%= @outgoing_transfer.routingNumber %>
+</p>
+
+<p>
+  <strong>Amount:</strong>
+  <%= @outgoing_transfer.amount %>
+</p>
+
+<p>
+  <strong>Account:</strong>
+  <%= @outgoing_transfer.account %>
+</p>
+
+<%= link_to 'Edit', edit_outgoing_transfer_path(@outgoing_transfer) %> |
+<%= link_to 'Back', outgoing_transfers_path %>

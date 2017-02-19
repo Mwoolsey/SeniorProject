@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Auto Bill Payments</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Originacctnumber</th>
+      <th>Destinationacctnumber</th>
+      <th>Amount</th>
+      <th>Businessname</th>
+      <th>Businessaddress</th>
+      <th>Datetopay</th>
+      <th>Account</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @auto_bill_payments.each do |auto_bill_payment| %>
+      <tr>
+        <td><%= auto_bill_payment.originAcctNumber %></td>
+        <td><%= auto_bill_payment.destinationAcctNumber %></td>
+        <td><%= auto_bill_payment.amount %></td>
+        <td><%= auto_bill_payment.businessName %></td>
+        <td><%= auto_bill_payment.businessAddress %></td>
+        <td><%= auto_bill_payment.dateToPay %></td>
+        <td><%= auto_bill_payment.account %></td>
+        <td><%= link_to 'Show', auto_bill_payment %></td>
+        <td><%= link_to 'Edit', edit_auto_bill_payment_path(auto_bill_payment) %></td>
+        <td><%= link_to 'Destroy', auto_bill_payment, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Auto Bill Payment', new_auto_bill_payment_path %>

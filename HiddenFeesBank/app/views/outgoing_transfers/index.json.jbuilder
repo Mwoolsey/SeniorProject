@@ -1,0 +1,1 @@
+json.array! @outgoing_transfers, partial: 'outgoing_transfers/outgoing_transfer', as: :outgoing_transfer

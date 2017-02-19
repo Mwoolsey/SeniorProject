@@ -1,0 +1,52 @@
+<%= form_for(auto_bill_payment) do |f| %>
+  <% if auto_bill_payment.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(auto_bill_payment.errors.count, "error") %> prohibited this auto_bill_payment from being saved:</h2>
+
+      <ul>
+      <% auto_bill_payment.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :originAcctNumber %>
+    <%= f.number_field :originAcctNumber %>
+  </div>
+
+  <div class="field">
+    <%= f.label :destinationAcctNumber %>
+    <%= f.number_field :destinationAcctNumber %>
+  </div>
+
+  <div class="field">
+    <%= f.label :amount %>
+    <%= f.text_field :amount %>
+  </div>
+
+  <div class="field">
+    <%= f.label :businessName %>
+    <%= f.text_field :businessName %>
+  </div>
+
+  <div class="field">
+    <%= f.label :businessAddress %>
+    <%= f.text_field :businessAddress %>
+  </div>
+
+  <div class="field">
+    <%= f.label :dateToPay %>
+    <%= f.date_select :dateToPay %>
+  </div>
+
+  <div class="field">
+    <%= f.label :account_id %>
+    <%= f.text_field :account_id %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

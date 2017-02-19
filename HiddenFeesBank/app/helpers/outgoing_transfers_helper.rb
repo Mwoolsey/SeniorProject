@@ -1,0 +1,2 @@
+module OutgoingTransfersHelper
+end

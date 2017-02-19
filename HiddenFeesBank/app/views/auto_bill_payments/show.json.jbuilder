@@ -1,0 +1,1 @@
+json.partial! "auto_bill_payments/auto_bill_payment", auto_bill_payment: @auto_bill_payment

@@ -1,0 +1,2 @@
+json.extract! outgoing_transfer, :id, :originAcctNumber, :destinationAcctNumber, :routingNumber, :amount, :account_id, :created_at, :updated_at
+json.url outgoing_transfer_url(outgoing_transfer, format: :json)

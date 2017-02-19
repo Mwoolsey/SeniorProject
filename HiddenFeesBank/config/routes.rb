@@ -1,3 +1,12 @@
 Rails.application.routes.draw do
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  devise_for :users 
+  resources :users, only: [:index]
+  resources :accounts do
+    resources :sms_alerts, shallow: true
+    resources :outgoing_transfers, shallow: true
+    resources :user_accounts, shallow: true
+    resources :internal_transfers, shallow: true
+    resources :auto_bill_payments, shallow: true
+  end
+  root "users#index"
 end

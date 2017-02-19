@@ -1,0 +1,42 @@
+<%= form_for(outgoing_transfer) do |f| %>
+  <% if outgoing_transfer.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(outgoing_transfer.errors.count, "error") %> prohibited this outgoing_transfer from being saved:</h2>
+
+      <ul>
+      <% outgoing_transfer.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :originAcctNumber %>
+    <%= f.number_field :originAcctNumber %>
+  </div>
+
+  <div class="field">
+    <%= f.label :destinationAcctNumber %>
+    <%= f.number_field :destinationAcctNumber %>
+  </div>
+
+  <div class="field">
+    <%= f.label :routingNumber %>
+    <%= f.number_field :routingNumber %>
+  </div>
+
+  <div class="field">
+    <%= f.label :amount %>
+    <%= f.text_field :amount %>
+  </div>
+
+  <div class="field">
+    <%= f.label :account_id %>
+    <%= f.text_field :account_id %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  acctNumber: 1
+  balance: 9.99
+  acctType: 1
+
+two:
+  acctNumber: 1
+  balance: 9.99
+  acctType: 1

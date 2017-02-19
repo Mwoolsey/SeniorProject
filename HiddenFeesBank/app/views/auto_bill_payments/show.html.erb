@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Originacctnumber:</strong>
+  <%= @auto_bill_payment.originAcctNumber %>
+</p>
+
+<p>
+  <strong>Destinationacctnumber:</strong>
+  <%= @auto_bill_payment.destinationAcctNumber %>
+</p>
+
+<p>
+  <strong>Amount:</strong>
+  <%= @auto_bill_payment.amount %>
+</p>
+
+<p>
+  <strong>Businessname:</strong>
+  <%= @auto_bill_payment.businessName %>
+</p>
+
+<p>
+  <strong>Businessaddress:</strong>
+  <%= @auto_bill_payment.businessAddress %>
+</p>
+
+<p>
+  <strong>Datetopay:</strong>
+  <%= @auto_bill_payment.dateToPay %>
+</p>
+
+<p>
+  <strong>Account:</strong>
+  <%= @auto_bill_payment.account %>
+</p>
+
+<%= link_to 'Edit', edit_auto_bill_payment_path(@auto_bill_payment) %> |
+<%= link_to 'Back', auto_bill_payments_path %>

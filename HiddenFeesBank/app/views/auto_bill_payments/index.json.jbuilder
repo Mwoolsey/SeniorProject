@@ -1,0 +1,1 @@
+json.array! @auto_bill_payments, partial: 'auto_bill_payments/auto_bill_payment', as: :auto_bill_payment

@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Sms Alerts</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Alerttype</th>
+      <th>Frequency</th>
+      <th>Account</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @sms_alerts.each do |sms_alert| %>
+      <tr>
+        <td><%= sms_alert.alertType %></td>
+        <td><%= sms_alert.frequency %></td>
+        <td><%= sms_alert.account %></td>
+        <td><%= link_to 'Show', sms_alert %></td>
+        <td><%= link_to 'Edit', edit_sms_alert_path(sms_alert) %></td>
+        <td><%= link_to 'Destroy', sms_alert, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Sms Alert', new_sms_alert_path %>
