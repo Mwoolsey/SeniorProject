@@ -39,14 +39,15 @@ users = User.create(
 
 (1..100).each do |n|
   actNum = (111111111 + rand(999999999))
+  user = (1 + rand(26))
   accts = Account.create (
    [
-     { acctNumber: actNum, balance: (rand * (100000 - 0) + 0 ), acctType: (1 + rand(2)), user_id: (1 + rand(26)) }
+     { acctNumber: actNum, balance: (rand * (100000 - 0) + 0 ), acctType: (1 + rand(2)) }
    ]
   )
   user_accts = UserAccount.create (
     [
-      { user_id: (1 + rand(26)), account_id: actNum },
+      { user_id: user, account_id: (1 + rand(100)) },
       { user_id: (1 + rand(26)), account_id: actNum }
     ]
   )

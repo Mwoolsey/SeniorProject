@@ -16,10 +16,8 @@ ActiveRecord::Schema.define(version: 20170219013028) do
     t.integer  "acctNumber"
     t.decimal  "balance"
     t.integer  "acctType"
-    t.integer  "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_accounts_on_user_id"
   end
 
   create_table "auto_bill_payments", force: :cascade do |t|
@@ -80,7 +78,6 @@ ActiveRecord::Schema.define(version: 20170219013028) do
     t.string   "encrypted_password",     default: "",                               null: false
     t.string   "address",                default: "123 State St. Chico, CA, 95973", null: false
     t.string   "phone",                  default: "5555555555",                     null: false
-    t.integer  "account_id"
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
@@ -91,7 +88,6 @@ ActiveRecord::Schema.define(version: 20170219013028) do
     t.string   "last_sign_in_ip"
     t.datetime "created_at",                                                        null: false
     t.datetime "updated_at",                                                        null: false
-    t.index ["account_id"], name: "index_users_on_account_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end

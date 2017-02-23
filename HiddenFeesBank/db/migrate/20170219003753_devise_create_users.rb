@@ -7,7 +7,6 @@ class DeviseCreateUsers < ActiveRecord::Migration[5.0]
       t.string :encrypted_password, null: false, default: ""
       t.string :address, 	    null: false, default: "123 State St. Chico, CA, 95973"
       t.string :phone,		    null: false, default: "5555555555"
-      t.references :account, index: true, foreign_key: true
 
       ## Recoverable
       t.string   :reset_password_token
