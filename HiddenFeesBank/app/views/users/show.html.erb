@@ -1,0 +1,47 @@
+<div id="wrapper">
+  <div id="header">
+    <h1>Hidden Fees Bank</h1>
+    <!-- Devise alerts -->
+    <div id="user_nav">
+      <% if user_signed_in? %>
+      Signed in as <%= current_user.email %>. Not you?
+      <%= link_to "Sign out", destroy_user_session_path, method: :delete %>
+      <% else %>
+      <%= link_to "Sign up", new_user_registration_path %> or
+      <%= link_to "Sign in", new_user_session_path %>
+      <% end %>
+    </div>
+  </div>
+  <div id="center">
+    <div id="leftcolumn">
+      <ul>
+	<li>Link 1</li>
+	<li>Link 2</li>
+	<li>Link 3</li>
+	<li>Link 4</li>
+      </ul>
+    </div>
+    <div id="content">
+      <table>
+	<tr>
+	  <th>Account Number</th>
+	  <th>Type</th>
+	  <th>Balance</th>
+	</tr>
+	<% @accounts.each do |acct| %>
+	  <tr>
+	    <td><%= acct.id %></td>
+	    <td><%= acct.acctType%></td>
+	    <td><%= number_to_currency(acct.balance)%></td>
+	    <td><%= link_to "Show", acct%></td>
+	  </tr>
+	<% end %>
+      </table>
+    </div>
+  </div>
+  <div id="footer">
+    <p>This is the footer</p>
+  </div>
+</div>
+<p class="notice"><%= notice %></p>
+<p class="alert"><%= alert %></p>

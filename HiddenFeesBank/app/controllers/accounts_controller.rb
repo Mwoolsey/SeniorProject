@@ -10,6 +10,11 @@ class AccountsController < ApplicationController
   # GET /accounts/1
   # GET /accounts/1.json
   def show
+    if current_user.id != @account.user.id
+      flash[:notice] = 'You do not have access to that, please sign in again'
+      sign_out current_user
+      redirect_to new_user_session_path
+    end
   end
 
   # GET /accounts/new

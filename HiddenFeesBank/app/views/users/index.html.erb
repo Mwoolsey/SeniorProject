@@ -1,5 +1,17 @@
-<ul>
-  <% @users.each do |user| %>
-    <li><%= user.name %></li>
+User: <%= current_user.name %>
+
+<table>
+  <tr>
+    <th>Account Number</th>
+    <th>Type</th>
+    <th>Balance</th>
+  </tr>
+  <% @accounts.each do |acct| %>
+    <tr>
+      <td><%= acct.id %></td>
+      <td><%= acct.acctType%></td>
+      <td><%= number_to_currency(acct.balance)%></td>
+      <td><%= link_to "Show", acct%></td>
+    </tr>
   <% end %>
-</ul>
+</table>

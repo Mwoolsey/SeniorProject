@@ -59,3 +59,5 @@ gem 'binding_of_caller', group: :development
 
 # whenever gem to handle cron jobs
 gem 'whenever', :require => false
+
+gem 'hirb'

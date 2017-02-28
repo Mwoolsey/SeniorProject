@@ -2,18 +2,17 @@
 
 <p>
   <strong>Acctnumber:</strong>
-  <%= @account.acctNumber %>
+  <%= @account.id%>
 </p>
 
 <p>
   <strong>Balance:</strong>
-  <%= @account.balance %>
+  <%= number_to_currency(@account.balance) %>
 </p>
 
 <p>
-  <strong>Accttype:</strong>
+  <strong>Acount Type:</strong>
   <%= @account.acctType %>
 </p>
 
-<%= link_to 'Edit', edit_account_path(@account) %> |
-<%= link_to 'Back', accounts_path %>
+<%= link_to 'Back', user_path(current_user) %>

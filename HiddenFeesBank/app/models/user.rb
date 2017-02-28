@@ -4,6 +4,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
   validates :name, presence: true
-  has_many :accounts, through: :user_accounts
+  has_many :accounts
   has_many :user_accounts
+  include ActionView::Helpers
 end

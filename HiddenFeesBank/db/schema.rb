@@ -13,11 +13,12 @@
 ActiveRecord::Schema.define(version: 20170219013028) do
 
   create_table "accounts", force: :cascade do |t|
-    t.integer  "acctNumber"
     t.decimal  "balance"
     t.integer  "acctType"
+    t.integer  "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_accounts_on_user_id"
   end
 
   create_table "auto_bill_payments", force: :cascade do |t|
