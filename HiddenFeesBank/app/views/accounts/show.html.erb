@@ -1,18 +1,19 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Acctnumber:</strong>
-  <%= @account.id%>
-</p>
+<div class="container">
+  <p>
+    <strong>Acctnumber:</strong>
+    <%= @account.id%>
+  </p>
+  <p>
+    <strong>Balance:</strong>
+    <%= number_to_currency(@account.balance) %>
+  </p>
 
-<p>
-  <strong>Balance:</strong>
-  <%= number_to_currency(@account.balance) %>
-</p>
+  <p>
+    <strong>Acount Type:</strong>
+    <%= @account.acctType %>
+  </p>
 
-<p>
-  <strong>Acount Type:</strong>
-  <%= @account.acctType %>
-</p>
-
-<%= link_to 'Back', user_path(current_user) %>
+  <%= link_to 'Back', user_path(current_user) %>
+</div>
