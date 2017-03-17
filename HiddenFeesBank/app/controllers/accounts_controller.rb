@@ -4,17 +4,20 @@ class AccountsController < ApplicationController
   # GET /accounts
   # GET /accounts.json
   def index
+    # need to get only the current users accounts
     @accounts = Account.all
   end
 
   # GET /accounts/1
   # GET /accounts/1.json
   def show
+    # check that the current user has access to the account page
     if current_user.id != @account.user.id
       flash[:notice] = 'You do not have access to that, please sign in again'
       sign_out current_user
       redirect_to new_user_session_path
     end
+    @transactions = @account.transactionSummary.reverse
   end
 
   # GET /accounts/new

@@ -10,14 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170219013028) do
+ActiveRecord::Schema.define(version: 20170315212218) do
 
   create_table "accounts", force: :cascade do |t|
     t.decimal  "balance"
     t.integer  "acctType"
     t.integer  "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.integer  "ssn"
+    t.string   "accountName"
     t.index ["user_id"], name: "index_accounts_on_user_id"
   end
 
@@ -64,6 +66,18 @@ ActiveRecord::Schema.define(version: 20170219013028) do
     t.index ["account_id"], name: "index_sms_alerts_on_account_id"
   end
 
+  create_table "transactions", force: :cascade do |t|
+    t.integer  "transactionNumber"
+    t.string   "description"
+    t.decimal  "amount"
+    t.string   "status"
+    t.integer  "account_id"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+    t.decimal  "currentBalance"
+    t.index ["account_id"], name: "index_transactions_on_account_id"
+  end
+
   create_table "user_accounts", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "account_id"
@@ -89,6 +103,7 @@ ActiveRecord::Schema.define(version: 20170219013028) do
     t.string   "last_sign_in_ip"
     t.datetime "created_at",                                                        null: false
     t.datetime "updated_at",                                                        null: false
+    t.integer  "ssn"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
