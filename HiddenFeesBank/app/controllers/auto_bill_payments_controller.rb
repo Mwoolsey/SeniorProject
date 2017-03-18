@@ -1,10 +1,12 @@
 class AutoBillPaymentsController < ApplicationController
   before_action :set_auto_bill_payment, only: [:show, :edit, :update, :destroy]
+  before_action :set_account
 
   # GET /auto_bill_payments
   # GET /auto_bill_payments.json
   def index
-    @auto_bill_payments = AutoBillPayment.all
+    @accounts = current_user.accounts
+    @auto_bill_payments = @origin_acct.auto_bill_payments.sort {|a,b| a.dateToPay <=> b.dateToPay}
   end
 
   # GET /auto_bill_payments/1
@@ -14,25 +16,33 @@ class AutoBillPaymentsController < ApplicationController
 
   # GET /auto_bill_payments/new
   def new
-    @auto_bill_payment = AutoBillPayment.new
+    @accounts = current_user.accounts
+    @auto_bill_payment = @origin_acct.auto_bill_payments.new
+    @businesses = $business_transactions.map { |t| t.split(",")[2]}
+    @businesses.sort!
   end
 
   # GET /auto_bill_payments/1/edit
   def edit
+
   end
 
   # POST /auto_bill_payments
   # POST /auto_bill_payments.json
   def create
-    @auto_bill_payment = AutoBillPayment.new(auto_bill_payment_params)
+    # check that the client didn't change the account_id
+    if params[:auto_bill_payment][:account_id] != @origin_acct.id.to_s
+      flash[:notice] = 'You cannot change Origin Account Number'
+      redirect_to new_account_auto_bill_payment_path
+      return
+    end
+    @auto_bill_payment = @origin_acct.auto_bill_payments.new(auto_bill_payment_params)
 
     respond_to do |format|
       if @auto_bill_payment.save
-        format.html { redirect_to @auto_bill_payment, notice: 'Auto bill payment was successfully created.' }
-        format.json { render :show, status: :created, location: @auto_bill_payment }
+        format.html { redirect_to account_auto_bill_payments_path, notice: 'Auto bill payment was successfully created.' } 
       else
         format.html { render :new }
-        format.json { render json: @auto_bill_payment.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -43,10 +53,8 @@ class AutoBillPaymentsController < ApplicationController
     respond_to do |format|
       if @auto_bill_payment.update(auto_bill_payment_params)
         format.html { redirect_to @auto_bill_payment, notice: 'Auto bill payment was successfully updated.' }
-        format.json { render :show, status: :ok, location: @auto_bill_payment }
       else
         format.html { render :edit }
-        format.json { render json: @auto_bill_payment.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -66,9 +74,13 @@ class AutoBillPaymentsController < ApplicationController
     def set_auto_bill_payment
       @auto_bill_payment = AutoBillPayment.find(params[:id])
     end
+    
+    def set_account
+      @origin_acct = Account.find(params[:account_id])
+    end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def auto_bill_payment_params
-      params.require(:auto_bill_payment).permit(:originAcctNumber, :destinationAcctNumber, :amount, :businessName, :businessAddress, :dateToPay, :account_id)
+      params.require(:auto_bill_payment).permit( :destinationAcctNumber, :amount, :businessName, :dateToPay, :account_id, :frequency)
     end
 end

@@ -51,14 +51,19 @@ locationNumber = (0...9999).to_a.shuffle.take(500)
 businesses = File.readlines("db/businesses.txt")
 cities = File.readlines("db/cities.txt")
 transactions.each_with_index do |t,i| 
-  t << "POS PURCHASE MERCHANT PURCHASE TERMINAL"
-  t << "%04d" % locationNumber[i]
-  t << businesses[rand_int(0,businesses.size - 1)]
-  t << cities[rand_int(0,cities.size - 1)]
-  t << "CA"
+  t << "POS PURCHASE MERCHANT PURCHASE TERMINAL,"
+  t << "%04d" % locationNumber[i] + ","
+  t << businesses[rand_int(0,businesses.size - 1)].chomp + ","
+  t << cities[rand_int(0,cities.size - 1)].chomp + ","
+  t << "CA\n"
 end
 #-------------------------------------------------------------------------------
-
+File.delete("db/transactions.txt")
+open('db/transactions.txt', 'a') do |f|
+  transactions.each do |t|
+    f << t.join("")
+  end
+end
 # create accounts and user_accounts join table
 actNum = 100000000
 (1..100).each do |n|
@@ -97,7 +102,7 @@ actNum = 100000000
       accts.first.balance = accts.first.balance - amt
       trans = Transaction.create (
 	[
-	  { description: transactions.sample.join(" "), amount: (amt * -1), status: "complete", account_id: actNum, created_at: created, currentBalance: accts.first.balance }
+	  { description: transactions.sample.join(" ").gsub(',',''), amount: (amt * -1), status: "complete", account_id: actNum, created_at: created, currentBalance: accts.first.balance }
 	]
       )
     end

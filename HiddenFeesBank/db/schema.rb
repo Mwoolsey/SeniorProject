@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170315212218) do
+ActiveRecord::Schema.define(version: 20170317230021) do
 
   create_table "accounts", force: :cascade do |t|
     t.decimal  "balance"
@@ -24,7 +24,6 @@ ActiveRecord::Schema.define(version: 20170315212218) do
   end
 
   create_table "auto_bill_payments", force: :cascade do |t|
-    t.integer  "originAcctNumber"
     t.integer  "destinationAcctNumber"
     t.decimal  "amount"
     t.string   "businessName"
@@ -33,6 +32,7 @@ ActiveRecord::Schema.define(version: 20170315212218) do
     t.integer  "account_id"
     t.datetime "created_at",            null: false
     t.datetime "updated_at",            null: false
+    t.string   "frequency"
     t.index ["account_id"], name: "index_auto_bill_payments_on_account_id"
   end
 

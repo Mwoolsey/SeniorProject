@@ -11,6 +11,7 @@ class TransactionsController < ApplicationController
       sign_out current_user
       redirect_to new_user_session_path
     end
+    @accounts = current_user.accounts
     @transactions = @account.transactions.sort { |a,b| b.created_at <=> a.created_at }
   end
 

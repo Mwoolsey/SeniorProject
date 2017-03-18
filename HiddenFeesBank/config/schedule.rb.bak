@@ -30,7 +30,3 @@ end
 every 5.minutes do
   rake "transactions:credit"
 end
-
-every 1.day, :at => '8:00 am' do
-  rake "auto_payments:run"
-end

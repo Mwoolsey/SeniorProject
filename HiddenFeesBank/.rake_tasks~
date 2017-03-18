@@ -5,6 +5,7 @@ assets:clean[keep]
 assets:clobber
 assets:environment
 assets:precompile
+auto_payments:run
 autoprefixer:info
 cache_digests:dependencies
 cache_digests:nested_dependencies

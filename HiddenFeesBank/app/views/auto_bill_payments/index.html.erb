@@ -1,39 +1,71 @@
-<p id="notice"><%= notice %></p>
+<p class="notice"><%= notice %></p>
+<p class="alert"><%= alert %></p>
+<div class="jumbotron">
+<div class="container">
+  <div class="page-header">
+    <h1>Hidden Fees Bank</h1>
+    <!-- Devise alerts -->
+    <div id="user_nav">
+      <% if user_signed_in? %>
+      Signed in as <%= current_user.email %>. Not you?
+      <%= link_to "Sign out", destroy_user_session_path, method: :delete %>
+      <% else %>
+      <%= link_to "Sign up", new_user_registration_path %> or
+      <%= link_to "Sign in", new_user_session_path %>
+      <% end %>
+    </div>
+  </div>
+  <div class="navbar navbar-inverse">
+    <div class="container-fluid">
+      <ul class="nav navbar-nav">
+	<li><a href="<%= user_path(current_user) %>">Home</a></li>
+	<li class="dropdown">
+	  <a class="dropdown-toggle" data-toggle="dropdown" href="#">Accounts
+	  <span class="caret"></span></a>
+	  <ul class="dropdown-menu">
+	    <% @accounts.each do |acct| %>
+	      <li><a href="<%= account_path(acct) %>"><%= acct.id %></a></li>
+	    <% end %>
+	  </ul>
+	</li>
+	<li><a href="#">Auto Bill Payments</a></li>
+	<li><a href="#">SMS</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-10 col-md-11 col-sm-12 col-sm-12">
+      <h1>Auto Bill Payments</h1>
 
-<h1>Auto Bill Payments</h1>
+      <div class="table-responsive">
+        <table class="table table-hover table-striped table-bordered">
+	    <tr>
+	      <th>Amount</th>
+	      <th>Destination Acctnumber</th>
+	      <th>Business Name</th>
+	      <th>Next Date to pay</th>
+	      <th>Frequency</th>
+	      <th>Account</th>
+	      <th colspan="3"></th>
+	    </tr>
 
-<table>
-  <thead>
-    <tr>
-      <th>Originacctnumber</th>
-      <th>Destinationacctnumber</th>
-      <th>Amount</th>
-      <th>Businessname</th>
-      <th>Businessaddress</th>
-      <th>Datetopay</th>
-      <th>Account</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+	    <% @auto_bill_payments.each do |auto_bill_payment| %>
+	      <tr>
+		<td><%= number_to_currency auto_bill_payment.amount %></td>
+		<td><%= auto_bill_payment.destinationAcctNumber %></td>
+		<td><%= auto_bill_payment.businessName %></td>
+		<td><%= auto_bill_payment.dateToPay %></td>
+		<td><%= auto_bill_payment.frequency %></td>
+		<td><%= auto_bill_payment.account.id %></td>
+		<td><%= link_to 'Edit', edit_auto_bill_payment_path(auto_bill_payment, :account_id => auto_bill_payment.account.id) %></td>
+		<td><%= link_to 'Destroy', auto_bill_payment, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+	      </tr>
+	    <% end %>
+	</table>
+      </div>
 
-  <tbody>
-    <% @auto_bill_payments.each do |auto_bill_payment| %>
-      <tr>
-        <td><%= auto_bill_payment.originAcctNumber %></td>
-        <td><%= auto_bill_payment.destinationAcctNumber %></td>
-        <td><%= auto_bill_payment.amount %></td>
-        <td><%= auto_bill_payment.businessName %></td>
-        <td><%= auto_bill_payment.businessAddress %></td>
-        <td><%= auto_bill_payment.dateToPay %></td>
-        <td><%= auto_bill_payment.account %></td>
-        <td><%= link_to 'Show', auto_bill_payment %></td>
-        <td><%= link_to 'Edit', edit_auto_bill_payment_path(auto_bill_payment) %></td>
-        <td><%= link_to 'Destroy', auto_bill_payment, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+      <a class="btn btn-default" href="<%= account_path(@origin_acct) %> %>">Back to Account</a>
+    </div>
+  </div>
+</div>
 
-<br>
-
-<%= link_to 'New Auto Bill Payment', new_auto_bill_payment_path %>

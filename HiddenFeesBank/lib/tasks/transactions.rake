@@ -10,7 +10,7 @@ namespace :transactions do
     @amt = rand_in_range(1.00, 500.00).round(2)
     @account.balance -= @amt
     @transaction = Transaction.new (
-      { :description => @transaction.description, :amount => (@amt * -1), :status => "complete", :account_id => @account.id, :currentBalance => @account.balance }
+      { :description => @transaction.description, :amount => (@amt * -1), :status => "complete", :account_id => @account.id, :currentBalance => @account.balance, :created_at => (Time.now - 7.hours) }
     )
     @transaction.save
     @account.save
