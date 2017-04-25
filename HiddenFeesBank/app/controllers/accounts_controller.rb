@@ -24,11 +24,13 @@ class AccountsController < ApplicationController
 
   # GET /accounts/1/edit
   def edit
+    @accounts = current_user.accounts
   end
 
   # PATCH/PUT /accounts/1
   # PATCH/PUT /accounts/1.json
   def update
+    @account.accountName = params[:account][:accountName]
     respond_to do |format|
       if @account.update(account_params)
         format.html { redirect_to @account, notice: 'Account was successfully updated.' }

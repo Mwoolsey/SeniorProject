@@ -38,6 +38,7 @@
       <ul class="nav nav-stacked">
 	<li role="presentation" class="shift"><a href="<%= account_auto_bill_payments_path(@account.id) %>">View Auto Payments</a></li>
 	<li role="presentation" class="shift"><a href="<%= new_account_auto_bill_payment_url(:account_id => @account.id) %>">Create Auto Payment</a></li>  
+	<li role="presentation" class="shift"><a href="<%= transfers_path(:account_id => @account.id, :current_user => current_user) %>">Transfer Funds</a></li>
 	<li role="presentation" class="shift"><a href="#">View SMS Alerts</a></li>
 	<li role="presentation" class="shift"><a href="#">Create SMS Alert</a></li>  
       </ul>
@@ -50,13 +51,18 @@
 	    <th>
 	      <strong>Acctnumber:</strong>
 	      <%= @account.id%>
-	    </th>
+	      <% if @account.accountName == nil %>
+		<%= link_to 'Add account alias', edit_account_path(@account) %>
+	      <% else %>
+		<br/><strong>Account Name:</strong>&nbsp<u><%= @account.accountName %></u>&nbsp&nbsp<%= link_to 'Edit account alias', edit_account_path(@account) %>
+	      <% end %>
+	    </th><br/>
 	    <th>
 	      <strong>Balance:</strong>
 	      <%= number_to_currency(@account.balance) %>
 	    </th>
 	    <th>
-	      <strong>Acount Type:</strong>
+	      <br/><strong>Acount Type:</strong>
 	      <% if @account.acctType == 1 %>
 		Savings
 	      <% else %>

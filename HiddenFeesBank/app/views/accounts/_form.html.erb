@@ -12,21 +12,11 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :acctNumber %>
-    <%= f.number_field :acctNumber %>
+    <%= f.label "Account Name" %>
+    <%= f.text_field :accountName%>
   </div>
-
-  <div class="field">
-    <%= f.label :balance %>
-    <%= f.text_field :balance %>
-  </div>
-
-  <div class="field">
-    <%= f.label :acctType %>
-    <%= f.number_field :acctType %>
-  </div>
-
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit :class => "btn btn-default" %>
+    <a class="btn btn-default" href="<%= account_path(@account) %>">Back to Account</a>
   </div>
 <% end %>

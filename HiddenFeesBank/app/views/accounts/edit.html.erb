@@ -1,6 +1,50 @@
-<h1>Editing Account</h1>
-
-<%= render 'form', account: @account %>
-
-<%= link_to 'Show', @account %> |
-<%= link_to 'Back', accounts_path %>
+<p class="notice"><%= notice %></p>
+<p class="alert"><%= alert %></p>
+<div class="jumbotron">
+<div class="container">
+  <div class="page-header">
+    <h1>Hidden Fees Bank</h1>
+    <!-- Devise alerts -->
+    <div id="user_nav">
+      <% if user_signed_in? %>
+      Signed in as <%= current_user.email %>. Not you?
+      <%= link_to "Sign out", destroy_user_session_path, method: :delete %>
+      <% else %>
+      <%= link_to "Sign up", new_user_registration_path %> or
+      <%= link_to "Sign in", new_user_session_path %>
+      <% end %>
+    </div>
+  </div>
+  <div class="navbar navbar-inverse">
+    <div class="container-fluid">
+      <ul class="nav navbar-nav">
+	<li><a href="<%= user_path(current_user) %>">Home</a></li>
+	<li class="dropdown">
+	  <a class="dropdown-toggle" data-toggle="dropdown" href="#">Accounts
+	  <span class="caret"></span></a>
+	  <ul class="dropdown-menu">
+	    <% @accounts.each do |acct| %>
+	      <li><a href="<%= account_path(acct) %>"><%= acct.id %></a></li>
+	    <% end %>
+	  </ul>
+	</li>
+	<li><a href="#">Auto Bill Payments</a></li>
+	<li><a href="#">SMS</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-2 col-md-1 col-sm-12 col-sm-12 links">
+      <ul class="nav nav-stacked">
+	<li role="presentation" class="shift"><a href="<%= account_auto_bill_payments_path(@account.id) %>">View Auto Payments</a></li>
+	<li role="presentation" class="shift"><a href="<%= new_account_auto_bill_payment_url(:account_id => @account.id) %>">Create Auto Payment</a></li>  
+	<li role="presentation" class="shift"><a href="<%= transfers_path(:account_id => @account.id, :current_user => current_user) %>">Transfer Funds</a></li>
+	<li role="presentation" class="shift"><a href="#">View SMS Alerts</a></li>
+	<li role="presentation" class="shift"><a href="#">Create SMS Alert</a></li>  
+      </ul>
+    </div>
+    <div class="col-lg-10 col-md-11 col-sm-12 col-sm-12">
+      <%= render 'form', account: @account %>
+    </div>
+  </div>
+</div>

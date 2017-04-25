@@ -44,9 +44,23 @@
       </ul>
     </div>
     <div class="col-lg-10 col-md-11 col-sm-12 col-sm-12">
-      <%= render 'form', internal_transfer: @internal_transfer %>
+      <p>Transfering money is as easy as pie with Hidden Fees Bank. And don't worry about us making a profit because there are bound to be fees hidden in there somewhere.</p>
+      <div class="row">
+	<div class="col-lg-5 col-md-5 col-sm-0 col-sm-0 text-center">
+	  <div class="row bg-info block">
+	      <p>Transfer money within Hidden Fees Bank</p>
+	      <a class="btn btn-default" href="<%= new_account_internal_transfer_path(@account) %>">Internal Transfer</a>
+	    <div class="row bg-info block">
+	      <p>Transfer money to an external account</p>
+		<a class="btn btn-default" href="<%= new_account_outgoing_transfer_path(@account) %>">External Transfer</a>
+	    </div>
+	  </div>
+	</div>
+	<div class="col-lg-5 col-md-5 col-sm-0 col-sm-0">
+	  <img src="<%= asset_path 'money_transfer.png' %>" class="img-fluid" alt="Responsive image">
+	</div>
+      </div>
       <a class="btn btn-default" href="<%= account_path(@account) %>">Back to Account</a>
     </div>
   </div>
 </div>
-

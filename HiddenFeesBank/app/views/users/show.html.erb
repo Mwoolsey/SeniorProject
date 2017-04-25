@@ -39,7 +39,7 @@
 	<table class="table table-hover table-bordered">
 	  <thead>
 	    <tr>
-	      <th>Account Number</th>
+	      <th>Account Number/Name</th>
 	      <th>Type</th>
 	      <th>Balance</th>
 	    </tr>
@@ -47,7 +47,11 @@
 	  <tbody>
 	    <% @accounts.each do |acct| %>
 	      <tr>
-		<td><%= acct.id %></td>
+		<% if acct.accountName == nil %>
+		  <td><%= acct.id %></td>
+		<% else %>
+		  <td><%= acct.accountName %></td>
+		<% end %>
 		<% if acct.acctType == 1 %>
 		  <td>Savings</td>
 		<% else %>

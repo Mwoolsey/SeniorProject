@@ -9,11 +9,11 @@ class ApplicationController < ActionController::Base
   # create an array of 500 transaction locations to choose from
   # this file is created by the seed file so that the business locations match
   # the generated businesses
-  $business_transactions = File.readlines("db/transactions.txt")
+  $business_transactions = File.readlines("db/businesses.txt")
 
   # it will take the form:
   # description locationNumber business city state
-  $business_transactions.map { |t| t.split(",") }
+  #$business_transactions.map { |t| t.split(",") }
   #-------------------------------------------------------------------------------
 
   protected

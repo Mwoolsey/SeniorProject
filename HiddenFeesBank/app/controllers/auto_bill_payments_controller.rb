@@ -18,8 +18,7 @@ class AutoBillPaymentsController < ApplicationController
   def new
     @accounts = current_user.accounts
     @auto_bill_payment = @origin_acct.auto_bill_payments.new
-    @businesses = $business_transactions.map { |t| t.split(",")[2]}
-    @businesses.sort!
+    @businesses = $business_transactions
   end
 
   # GET /auto_bill_payments/1/edit
