@@ -24,7 +24,7 @@
 	  <span class="caret"></span></a>
 	  <ul class="dropdown-menu">
 	    <% @accounts.each do |acct| %>
-	      <li><a href="<%= account_path(acct) %>"><%= acct.id %></a></li>
+	      <li><a href="<%= account_path(acct) %>"><%= acct.accountName ? acct.accountName : acct.id %></a></li>
 	    <% end %>
 	  </ul>
 	</li>

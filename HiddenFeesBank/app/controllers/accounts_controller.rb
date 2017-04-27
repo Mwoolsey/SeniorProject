@@ -22,6 +22,12 @@ class AccountsController < ApplicationController
     @auto_payment = @account.auto_bill_payments.new
   end
 
+  def updated_at
+    @account = Account.find(params[:id])
+    @transactions = @account.transactionSummary.reverse
+    render :partial => "accounts/table-custom" 
+  end
+
   # GET /accounts/1/edit
   def edit
     @accounts = current_user.accounts

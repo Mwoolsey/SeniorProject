@@ -35,6 +35,6 @@ every 1.day :at => '8am' do
   rake "auto_payments:run"
 end
 
-every 1.day :at => '12am' do
+every 1.hour do
   rake "posts:delete_60_days_old"
 end

@@ -1,0 +1,56 @@
+<div class="table-responsive">
+  <div class="table">
+    <tr>
+      <th>
+	<strong>Account Number:</strong>
+	<%= @account.id%>
+	<% if @account.accountName == nil %>
+	  <%= link_to 'Add account alias', edit_account_path(@account) %>
+	<% else %>
+	  <br/><strong>Account Name:</strong>&nbsp<u><%= @account.accountName %></u>&nbsp&nbsp<%= link_to 'Edit account name', edit_account_path(@account) %>
+	<% end %>
+      </th><br/>
+      <th>
+	<strong>Balance:</strong>
+	<%= number_to_currency(@account.balance) %>
+      </th>
+      <th>
+	<br/><strong>Acount Type:</strong>
+	<% if @account.acctType == 1 %>
+	  Savings
+	<% else %>
+	  Checking
+	<% end %>
+      </th>
+    </tr>
+</div>
+<div class="table-responsive">
+  <table class="table table-hover table-striped table-bordered smallTxt">
+    <tr>
+      <th>Date</th>
+      <th>Description</th>
+      <th>Debit</th>
+      <th>Credit</th>
+      <th>Balance</th>
+    </tr>
+    <% @transactions.each do |transaction| %>
+      <% if transaction.amount <= 0 %>
+	<tr>
+	  <td><%= transaction.created_at.to_s(:db) %></td>
+	  <td><%= transaction.description %></td>
+	  <td><%= number_to_currency transaction.amount %></td>
+	  <td></td>
+	  <td><%= number_to_currency transaction.currentBalance %></td>
+	</tr>
+      <% else %>
+	<tr>
+	  <td><%= transaction.created_at.to_s(:db) %></td>
+	  <td><%= transaction.description %></td>
+	  <td></td>
+	  <td><%= number_to_currency transaction.amount %></td>
+	  <td><%= number_to_currency transaction.currentBalance %></td>
+	</tr>
+      <% end %>
+    <% end %>
+  </table>
+</div>

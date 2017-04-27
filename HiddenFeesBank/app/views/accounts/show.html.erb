@@ -24,7 +24,7 @@
 	  <span class="caret"></span></a>
 	  <ul class="dropdown-menu">
 	    <% @accounts.each do |acct| %>
-	      <li><a href="<%= account_path(acct) %>"><%= acct.id %></a></li>
+	      <li><a href="<%= account_path(acct) %>"><%= acct.accountName ? acct.accountName : acct.id %></a></li>
 	    <% end %>
 	  </ul>
 	</li>
@@ -45,63 +45,16 @@
     </div>
     <div class="col-lg-10 col-md-11 col-sm-12 col-sm-12">
       <h2>Recent Account Activity</h2>
-      <div class="table-responsive">
-	<div class="table">
-	  <tr>
-	    <th>
-	      <strong>Acctnumber:</strong>
-	      <%= @account.id%>
-	      <% if @account.accountName == nil %>
-		<%= link_to 'Add account alias', edit_account_path(@account) %>
-	      <% else %>
-		<br/><strong>Account Name:</strong>&nbsp<u><%= @account.accountName %></u>&nbsp&nbsp<%= link_to 'Edit account alias', edit_account_path(@account) %>
-	      <% end %>
-	    </th><br/>
-	    <th>
-	      <strong>Balance:</strong>
-	      <%= number_to_currency(@account.balance) %>
-	    </th>
-	    <th>
-	      <br/><strong>Acount Type:</strong>
-	      <% if @account.acctType == 1 %>
-		Savings
-	      <% else %>
-		Checking
-	      <% end %>
-	    </th>
-	  </tr>
+      <div class="table-custom">
+	<%= render :partial => "accounts/table-custom" %>
       </div>
-      <div class="table-responsive">
-	<table class="table table-hover table-striped table-bordered smallTxt">
-	  <tr>
-	    <th>Date</th>
-	    <th>Description</th>
-	    <th>Debit</th>
-	    <th>Credit</th>
-	    <th>Balance</th>
-	  </tr>
-	  <% @transactions.each do |transaction| %>
-	    <% if transaction.amount <= 0 %>
-	      <tr>
-		<td><%= transaction.created_at.to_s(:db) %></td>
-		<td><%= transaction.description %></td>
-		<td><%= number_to_currency transaction.amount %></td>
-		<td></td>
-		<td><%= number_to_currency transaction.currentBalance %></td>
-	      </tr>
-	    <% else %>
-	      <tr>
-		<td><%= transaction.created_at.to_s(:db) %></td>
-		<td><%= transaction.description %></td>
-		<td></td>
-		<td><%= number_to_currency transaction.amount %></td>
-		<td><%= number_to_currency transaction.currentBalance %></td>
-	      </tr>
-	    <% end %>
-	  <% end %>
-	</table>
-      </div>
-      <a class="btn btn-default" href="<%= account_transactions_path(:account_id => @account.id) %>">View All</a>
     </div>
+      <a class="btn btn-default" href="<%= account_transactions_path(:account_id => @account.id) %>">View All</a>
   </div>
 </div>
+<script>
+$(document).ready(function() {
+  setInterval(function(){ $('.table-custom').load('/accounts/<%= @account.id %>/updated_at');}, 5000);
+}
+);
+</script>

@@ -23,5 +23,6 @@ Rails.application.routes.draw do
   end
 
   get 'transfers' => "transfers#new"
+  get 'accounts/:id/updated_at' => "accounts#updated_at"
 
 end

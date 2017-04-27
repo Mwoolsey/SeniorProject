@@ -11,7 +11,9 @@ namespace :transactions do
     # transaction for
     while (@account = @accounts.sample).acctType == 1 do 
     end
+    #@account = @accounts[36]
     @amt = rand_in_range(1.00, 500.00).round(2)
+    #@amt = 5.00;
     @account.update_attribute :balance, @account.balance - @amt
     @transaction = Transaction.new (
       { :description => @transaction.description,
