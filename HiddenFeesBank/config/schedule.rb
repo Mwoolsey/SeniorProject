@@ -22,10 +22,11 @@ env :PATH, ENV['PATH']
 env :GEM_PATH, ENV['GEM_PATH']
 set :environment, "development"
 set :output, {:error => "log/cron_error_log.log", :standard => "log/cron_log.log"} 
-
 every 4.minutes do
   rake "transactions:debit"
 end
+=begin
+=end
 
 every 5.minutes do
   rake "transactions:credit"

@@ -24,7 +24,7 @@
 	  <span class="caret"></span></a>
 	  <ul class="dropdown-menu">
 	    <% @accounts.each do |acct| %>
-	      <li><a href="<%= account_path(acct) %>"><%= acct.accountName ? acct.accountName : acct.id %></a></li>
+	      <li><a href="<%= account_path(acct) %>", data-turbolinks="false"><%= acct.accountName ? acct.accountName : acct.id %></a></li>
 	    <% end %>
 	  </ul>
 	</li>
@@ -39,8 +39,8 @@
 	<li role="presentation" class="shift"><a href="<%= account_auto_bill_payments_path(@account.id) %>">View Auto Payments</a></li>
 	<li role="presentation" class="shift"><a href="<%= new_account_auto_bill_payment_url(:account_id => @account.id) %>">Create Auto Payment</a></li>  
 	<li role="presentation" class="shift"><a href="<%= transfers_path(:account_id => @account.id, :current_user => current_user) %>">Transfer Funds</a></li>
-	<li role="presentation" class="shift"><a href="#">View SMS Alerts</a></li>
-	<li role="presentation" class="shift"><a href="#">Create SMS Alert</a></li>  
+	<li role="presentation" class="shift"><a href="<%= account_sms_alerts_path(@account) %>">View SMS Alerts</a></li>
+	<li role="presentation" class="shift"><a href="<%= new_account_sms_alert_path(@account.id) %>">Create SMS Alert</a></li>  
       </ul>
     </div>
     <div class="col-lg-10 col-md-11 col-sm-12 col-sm-12">
@@ -53,8 +53,8 @@
   </div>
 </div>
 <script>
-$(document).ready(function() {
-  setInterval(function(){ $('.table-custom').load('/accounts/<%= @account.id %>/updated_at');}, 5000);
+$(document).on('turbolinks:load', function() {
+  setInterval(function(){ $('.table-custom').load('/accounts/<%= @account.id %>/updated_at');}, 7000);
 }
 );
 </script>

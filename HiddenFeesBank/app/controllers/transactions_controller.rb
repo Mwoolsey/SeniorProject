@@ -1,9 +1,8 @@
 class TransactionsController < ApplicationController
-  before_action :set_transaction, only: [:show, :edit, :update, :destroy]
-  before_action :set_account, only: [:index, :show, :edit, :update, :destroy]
+  skip_before_filter :verify_authenticity_token, :except => [:index]
+  before_action :set_account, only: [:index, :create]
 
   # GET /transactions
-  # GET /transactions.json
   def index
     # check that the current user has access to the transactions page
     if current_user.id != @account.user.id
@@ -15,57 +14,17 @@ class TransactionsController < ApplicationController
     @transactions = @account.transactions.sort { |a,b| b.created_at <=> a.created_at }
   end
 
-  # GET /transactions/1
-  # GET /transactions/1.json
-  def show
-  end
-
-  # GET /transactions/new
-  def new
-    @transaction = Transaction.new
-  end
-
-  # GET /transactions/1/edit
-  def edit
-  end
-
   # POST /transactions
-  # POST /transactions.json
   def create
-    @transaction = Transaction.new(transaction_params)
 
-    respond_to do |format|
-      if @transaction.save
-        #format.html { redirect_to @transaction, notice: 'Transaction was successfully created.' }
-        #format.json { render :show, status: :created, location: @transaction }
-      else
-        #format.html { render :new }
-        #format.json { render json: @transaction.errors, status: :unprocessable_entity }
-      end
-    end
-  end
+    #easy = SMSEasy::Client.new
+    #easy.deliver("5305929957", "at&t", "It worked!!!!!")
 
-  # PATCH/PUT /transactions/1
-  # PATCH/PUT /transactions/1.json
-  def update
-    respond_to do |format|
-      if @transaction.update(transaction_params)
-        format.html { redirect_to @transaction, notice: 'Transaction was successfully updated.' }
-        format.json { render :show, status: :ok, location: @transaction }
-      else
-        format.html { render :edit }
-        format.json { render json: @transaction.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  # DELETE /transactions/1
-  # DELETE /transactions/1.json
-  def destroy
-    @transaction.destroy
-    respond_to do |format|
-      format.html { redirect_to transactions_url, notice: 'Transaction was successfully destroyed.' }
-      format.json { head :no_content }
+    @transaction = @account.transactions.new({:description => params[:description], :amount => params[:amount], :status => params[:status], :account_id => params[:account_id], :currentBalance => params[:currentBalance], :created_at => params[:created_at]})
+    if @transaction.save
+      @account.update_attribute :balance, @account.balance + params[:amount].to_f
+    else
+      puts "Error saving transaction"
     end
   end
 
@@ -81,6 +40,6 @@ class TransactionsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def transaction_params
-      params.require(:transaction, :account_id).permit(:transactionNumber, :description, :amount, :status)
+      params.require(:transaction, :account_id).permit(:transactionNumber, :description, :amount, :status, :currentBalance, :created_at)
     end
 end

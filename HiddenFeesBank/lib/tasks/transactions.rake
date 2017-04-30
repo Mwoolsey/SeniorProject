@@ -1,8 +1,14 @@
 namespace :transactions do
   desc "Rake task to create transactions"
   task :debit => :environment do
+    session = ActionDispatch::Integration::Session.new(Rails.application)
+    session.get '/users/sign_in'
+    csrf_token = session.session[:_csrf_token]
+    session.post '/users/sign_in', {:authenticity_token => csrf_token, :user => {:email => "a@a.com", :password => "a"}}
+
     @transactions = Transaction.all
     @accounts = Account.all
+    @amt = rand_in_range(-500.00, -1.00).round(2)
     # find a random transaction (that isn't a deposit) to copy a description
     # from to simulate debits
     while (@transaction = @transactions.sample).description == "Deposit" do
@@ -12,40 +18,25 @@ namespace :transactions do
     while (@account = @accounts.sample).acctType == 1 do 
     end
     #@account = @accounts[36]
-    @amt = rand_in_range(1.00, 500.00).round(2)
-    #@amt = 5.00;
-    @account.update_attribute :balance, @account.balance - @amt
-    @transaction = Transaction.new (
-      { :description => @transaction.description,
-       	:amount => (@amt * -1),
-       	:status => "complete",
-       	:account_id => @account.id,
-       	:currentBalance => @account.balance,
-       	:created_at => (Time.now - 7.hours)
-      }
-    )
-    @transaction.save
-    puts "Transaction created for #{@account.user.name}: #{@account.id}, with an amount of #{-1*@amt}"
+    #@amt = -5.00;
+    session.post "/accounts/#{@account.id}/transactions#create", { description: @transaction.description, amount: @amt, status: 'complete', account_id: @account.id, currentBalance: @account.balance + @amt, created_at: Time.now - 7.hours }
+    puts "Transaction created for #{@account.user.name}: #{@account.id}, with an amount of #{@amt}"
   end
 
   task :credit => :environment do
+    session = ActionDispatch::Integration::Session.new(Rails.application)
+    session.get '/users/sign_in'
+    csrf_token = session.session[:_csrf_token]
+    session.post '/users/sign_in', {:authenticity_token => csrf_token, :user => {:email => "a@a.com", :password => "a"}}
+
     @transactions = Transaction.all
     @transaction = @transactions.sample
     @accounts = Account.all
     @account = @accounts.sample
-    @amt = rand_in_range(1.00, 500.00).round(2)
-    @account.balance += @amt
-    @transaction = Transaction.new (
-      { :description => "Deposit",
-       	:amount => @amt,
-       	:status => "complete",
-       	:account_id => @account.id,
-       	:currentBalance => @account.balance, 
-       	:created_at => (Time.now - 7.hours)
-      }
-    )
-    @transaction.save
-    @account.save
+    @amt = rand_in_range(100.00, 800.00).round(2)
+    #@account = Account.all[36]
+    #@amt = 344.00
+    session.post "/accounts/#{@account.id}/transactions#create", { description: 'Deposit', amount: @amt, status: 'complete', account_id: @account.id, currentBalance: @account.balance + @amt, created_at: Time.now - 7.hours }
     puts "Transaction created for #{@account.user.name}: #{@account.id}, with an amount of #{@amt}"
   end
 end

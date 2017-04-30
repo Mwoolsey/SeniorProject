@@ -1,29 +1,28 @@
 class AccountsController < ApplicationController
-  before_action :set_account, only: [:show, :edit, :update, :destroy]
+  before_action :set_account, only: [:show, :edit, :update, :destroy, :updated_at]
 
   # GET /accounts
   # GET /accounts.json
   def index
-    # need to get only the current users accounts
-    @accounts = Account.all
+    puts 'In index controller'
   end
 
   # GET /accounts/1
   # GET /accounts/1.json
   def show
     # check that the current user has access to the account page
-    if current_user.id != @account.user.id
+    if !@account.users.include?(current_user) and current_user != @account.user
       flash[:notice] = 'You do not have access to that, please sign in again'
       sign_out current_user
       redirect_to new_user_session_path
+    else
+      @accounts = current_user.accounts
+      @transactions = @account.transactionSummary.reverse
+      @auto_payment = @account.auto_bill_payments.new
     end
-    @accounts = current_user.accounts
-    @transactions = @account.transactionSummary.reverse
-    @auto_payment = @account.auto_bill_payments.new
   end
 
   def updated_at
-    @account = Account.find(params[:id])
     @transactions = @account.transactionSummary.reverse
     render :partial => "accounts/table-custom" 
   end

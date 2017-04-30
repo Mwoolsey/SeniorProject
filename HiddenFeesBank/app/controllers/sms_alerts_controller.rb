@@ -1,10 +1,11 @@
 class SmsAlertsController < ApplicationController
   before_action :set_sms_alert, only: [:show, :edit, :update, :destroy]
+  before_action :set_accounts
 
   # GET /sms_alerts
   # GET /sms_alerts.json
   def index
-    @sms_alerts = SmsAlert.all
+    @sms_alerts = @account.sms_alerts
   end
 
   # GET /sms_alerts/1
@@ -14,7 +15,7 @@ class SmsAlertsController < ApplicationController
 
   # GET /sms_alerts/new
   def new
-    @sms_alert = SmsAlert.new
+    @sms_alert = @account.sms_alerts.new
   end
 
   # GET /sms_alerts/1/edit
@@ -67,8 +68,13 @@ class SmsAlertsController < ApplicationController
       @sms_alert = SmsAlert.find(params[:id])
     end
 
+    def set_accounts
+      @accounts = current_user.accounts
+      @account = Account.find(params[:account_id])
+    end
+
     # Never trust parameters from the scary internet, only allow the white list through.
     def sms_alert_params
-      params.require(:sms_alert).permit(:alertType, :frequency, :account_id)
+      params.require(:sms_alert).permit(:alertType, :frequency, :account_id, :next_alert, :trigger_criteria, :trigger_amount)
     end
 end

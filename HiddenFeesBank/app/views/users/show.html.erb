@@ -24,12 +24,11 @@
 	  <span class="caret"></span></a>
 	  <ul class="dropdown-menu">
 	    <% @accounts.each do |acct| %>
-	      <li><a href="<%= account_path(acct) %>"><%= acct.id %></a></li>
+	      <li><a href="<%= account_path(acct) %>", data-turbolinks="false"><%= acct.accountName ? acct.accountName : acct.id %></a></li>
 	    <% end %>
 	  </ul>
 	</li>
-	<li><a href="#">Auto Bill Payments</a></li>
-	<li><a href="#">SMS</a></li>
+	<li><a href="#">About Us</a></li>
       </ul>
     </div>
   </div>
@@ -47,23 +46,21 @@
 	  <tbody>
 	    <% @accounts.each do |acct| %>
 	      <tr>
-		<% if acct.accountName == nil %>
-		  <td><%= acct.id %></td>
-		<% else %>
-		  <td><%= acct.accountName %></td>
-		<% end %>
+	      <td><a href="<%= account_path(acct) %>", data-turbolinks="false"><%= acct.accountName ? acct.accountName : acct.id %></a></td>
 		<% if acct.acctType == 1 %>
 		  <td>Savings</td>
 		<% else %>
 		  <td>Checking</td>
 		<% end %>
 		<td><%= number_to_currency(acct.balance)%></td>
-		<td><%= link_to "Show", acct%></td>
 	      </tr>
 	    <% end %>
 	  </tbody>
 	</table>
       </div>
+    </div>
+    <div class="col-lg-6 col-md-12 col-sm-12 col-sm-12">
+      <p class="lead">Here you have access to all of the accounts you have been verified to use. Choose an account to view transaction history, create/view Automatic Bill-Payments, create/view SMS Alerts, and Transfer funds.</p>
     </div>
   </div>
 </div>

@@ -1,10 +1,10 @@
-<%= form_for(sms_alert) do |f| %>
-  <% if sms_alert.errors.any? %>
+<%= form_for([@account, @sms_alert]) do |f| %>
+  <% if @sms_alert.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(sms_alert.errors.count, "error") %> prohibited this sms_alert from being saved:</h2>
 
       <ul>
-      <% sms_alert.errors.full_messages.each do |message| %>
+      <% @sms_alert.errors.full_messages.each do |message| %>
         <li><%= message %></li>
       <% end %>
       </ul>
@@ -12,8 +12,13 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :alertType %>
-    <%= f.number_field :alertType %>
+    <%= f.label "Carrier:" %>
+    <%= f.select :carrier, [["Alltel Wireless" , "alltel"], ["AT&T/Cingular" , "at&t"], ["Boost Mobile" , "boost"], ["Sprint Wireless" , "sprint"], ["T-Mobile US" , "t-mobile"], ["T-Mobile UK" , "t-mobile-uk"], ["Virgin Mobile" , "virgin"], ["Verizon Wireless" , "verizon"], ["Vodafone Tokyo" , "vodafone-jp-tokyo"]] %>
+  </div>
+
+  <div class="field">
+    <%= f.label "Alert Type:" %>
+    <%= f.select :alertType, [["Triggered Alert", 1], ["Recurring Alert", 2]]  %>
   </div>
 
   <div class="field">
@@ -21,10 +26,7 @@
     <%= f.number_field :frequency %>
   </div>
 
-  <div class="field">
-    <%= f.label :account_id %>
-    <%= f.text_field :account_id %>
-  </div>
+  <%= f.hidden_field :account_id, value: @account.id %>
 
   <div class="actions">
     <%= f.submit %>

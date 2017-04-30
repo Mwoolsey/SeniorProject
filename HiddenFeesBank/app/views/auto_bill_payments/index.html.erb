@@ -24,7 +24,7 @@
 	  <span class="caret"></span></a>
 	  <ul class="dropdown-menu">
 	    <% @accounts.each do |acct| %>
-	      <li><a href="<%= account_path(acct) %>"><%= acct.id %></a></li>
+	      <li><a href="<%= account_path(acct) %>", data-turbolinks="false"><%= acct.accountName ? acct.accountName : acct.id %></a></li>
 	    <% end %>
 	  </ul>
 	</li>
@@ -34,6 +34,14 @@
     </div>
   </div>
   <div class="row">
+    <div class="col-lg-2 col-md-2 col-sm-12 col-sm-12 links">
+      <ul class="nav nav-stacked">
+	<li role="presentation" class="shift"><a href="<%= account_auto_bill_payments_path(@origin_acct.id) %>">View Auto Payments</a></li>
+	<li role="presentation" class="shift"><a href="<%= new_account_auto_bill_payment_url(:account_id => @origin_acct.id) %>">Create Auto Payment</a></li>  
+	<li role="presentation" class="shift"><a href="<%= account_sms_alerts_path(@origin_acct) %>">View SMS Alerts</a></li>
+	<li role="presentation" class="shift"><a href="#">Create SMS Alert</a></li>  
+      </ul>
+    </div>
     <div class="col-lg-10 col-md-11 col-sm-12 col-sm-12">
       <h1>Auto Bill Payments</h1>
 
