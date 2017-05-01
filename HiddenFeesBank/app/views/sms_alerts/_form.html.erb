@@ -17,18 +17,38 @@
   </div>
 
   <div class="field">
-    <%= f.label "Alert Type:" %>
-    <%= f.select :alertType, [["Triggered Alert", 1], ["Recurring Alert", 2]]  %>
+    <u>Please use the format: 5555555555</u><br />
+    <%= f.label :phone, 'Phone Number' %>
+    <%= f.number_field :phone %>
   </div>
 
   <div class="field">
-    <%= f.label :frequency %>
-    <%= f.number_field :frequency %>
+    <b>Choose an event type:</b><br />
+    <input type="radio" name="sms_alert[alertType]" value="alertType_1">Triggered<br />
+    <input type="radio" name="sms_alert[alertType]" value="alertType_2">Recurring
+  </div>
+  <div id="alertType_1">
+    <div class="field">
+      <%= f.label :trigger_criteria, "Trigger Criterea" %>
+      <%= f.select :trigger_criteria, [["Less than", 1], ["Equal to", 2], ["Greater than", 3]] %>
+    </div>
+    <div class="field">
+      <%= f.label :trigger_amount, "Trigger Amount:" %>
+      <%= f.number_field :trigger_amount %>
+    </div>
+  </div>
+  <div id="alertType_2">
+    <div class="field">
+      <%= f.label :frequency, "Frequency" %>
+      <%= f.select :frequency, [["Daily", 1],["Weekly", 2],["Monthly",3]] %>
+    </div>
   </div>
 
   <%= f.hidden_field :account_id, value: @account.id %>
 
   <div class="actions">
-    <%= f.submit %>
+    <br />
+      <%= f.submit class: 'btn btn-default' %>
+      <a class="btn btn-default" href="<%= account_path(@account) %>">Back to Account</a>
   </div>
 <% end %>

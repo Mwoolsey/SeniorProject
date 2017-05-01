@@ -14,7 +14,7 @@ Rails.application.routes.draw do
   resources :users, :path => :user
 
   resources :accounts do
-    resources :sms_alerts, shallow: true
+    resources :sms_alerts
     resources :outgoing_transfers, shallow: true
     resources :user_accounts, shallow: true
     resources :internal_transfers, shallow: true

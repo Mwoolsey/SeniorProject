@@ -43,9 +43,50 @@
       </ul>
     </div>
     <div class="col-lg-10 col-md-10 col-sm-12">
-    </div>
-    <div class="row">
-      <a class="btn btn-default" href="<%= account_transactions_path(:account_id => @account.id) %>">Back to Top</a>
+      <div class="table-responsive">
+	<table class="table table-hover table-striped table-bordered table-sm">
+	  <tr>
+	    <th>Carrier</th>
+	    <th>Alert Type</th>
+	    <th>Frequency</th>
+	    <th>Next Alert</th>
+	    <th>Trigger Criterea</th>
+	    <th>Trigger Amount</th>
+	    <th>Phone Number</th>
+	  </tr>
+	  <% @sms_alerts.each do |alert| %>
+	    <% if !alert.new_record? %>
+	      <tr>
+		<td><%= alert.carrier %></td>
+		<td><%= alert.alertType == 1 ? "Triggered" : "Recurring" %></td>
+		<% if alert.frequency == nil %>
+		  <td></td>
+		<% elsif alert.frequency == 1 %>
+		  <td>Daily</td>
+		<% elsif alert.frequency == 2 %>
+		  <td>Weekly</td>
+		<% else %>
+		  <td>Monthly</td>
+		<% end %>
+		<td><%= alert.next_alert != nil ? alert.next_alert.to_date : "" %></td>
+		<% if alert.trigger_criteria == nil %>
+		  <td></td>
+		<% elsif alert.trigger_criteria == 1 %>
+		  <td>Less Than</td>
+		<% elsif alert.trigger_criteria == 2 %>
+		  <td>Equal To</td>
+		<% else %>
+		  <td>Greater Than</td>
+		<% end %>
+		<td><%= alert.trigger_amount %></td>
+		<td><%= alert.phone %></td>
+		<td><%= link_to 'edit', edit_account_sms_alert_path(alert, :account_id => @account.id) %></td>
+		<td><%= link_to 'delete', account_sms_alert_path(:id => alert.id), method: :delete, data: { confirm: 'Are you sure?' } %> </td>
+	      </tr>
+	    <% end %>
+	  <% end %>
+	</table>
+      </div>
     </div>
   </div>
 </div>

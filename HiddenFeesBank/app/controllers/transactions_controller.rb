@@ -17,7 +17,7 @@ class TransactionsController < ApplicationController
   # POST /transactions
   def create
 
-    #easy = SMSEasy::Client.new
+    easy = SMSEasy::Client.new
     #easy.deliver("5305929957", "at&t", "It worked!!!!!")
 
     @transaction = @account.transactions.new({:description => params[:description], :amount => params[:amount], :status => params[:status], :account_id => params[:account_id], :currentBalance => params[:currentBalance], :created_at => params[:created_at]})
@@ -25,6 +25,26 @@ class TransactionsController < ApplicationController
       @account.update_attribute :balance, @account.balance + params[:amount].to_f
     else
       puts "Error saving transaction"
+    end
+    #------------------------------------------------------------------------------
+    # Check for any alerts that this transaction should trigger
+    #------------------------------------------------------------------------------
+    # get only the triggered alerts
+    sms_alerts = @account.sms_alerts.select{|alert| alert.alertType == 1}.map{|alert| alert}
+    sms_alerts.each do |alert|
+      if alert.trigger_criteria == 1 # trigger on less than
+	if @transaction.amount.abs < alert.trigger_amount
+	  easy.deliver(alert.phone.to_s, alert.carrier, "Account Number: #{@account.id}\nTransaction Created:\nAmount: #{@transaction.amount}\nDescription: #{@transaction.description}")
+	end
+      elsif alert.trigger_criteria == 2 # trigger on equal to
+	if @transaction.amount.abs == alert.trigger_amount
+	  easy.deliver(alert.phone.to_s, alert.carrier, "Account Number: #{@account.id}\nTransaction Created:\nAmount: #{@transaction.amount}\nDescription: #{@transaction.description}")
+	end
+      else # trigger on greater than
+	if @transaction.amount.abs > alert.trigger_amount 
+	  easy.deliver(alert.phone.to_s, alert.carrier, "Account Number: #{@account.id}\nTransaction Created:\nAmount: #{@transaction.amount}\nDescription: #{@transaction.description}")
+	end
+      end
     end
   end
 

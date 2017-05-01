@@ -1,6 +1,69 @@
-<h1>Editing Sms Alert</h1>
+<p class="notice"><%= notice %></p>
+<p class="alert"><%= alert %></p>
+<div class="jumbotron">
+<div class="container">
+  <div class="page-header">
+    <h1>Hidden Fees Bank</h1>
+    <!-- Devise alerts -->
+    <div id="user_nav">
+      <% if user_signed_in? %>
+      Signed in as <%= current_user.email %>. Not you?
+      <%= link_to "Sign out", destroy_user_session_path, method: :delete %>
+      <% else %>
+      <%= link_to "Sign up", new_user_registration_path %> or
+      <%= link_to "Sign in", new_user_session_path %>
+      <% end %>
+    </div>
+  </div>
+  <div class="navbar navbar-inverse">
+    <div class="container-fluid">
+      <ul class="nav navbar-nav">
+	<li><a href="<%= user_path(current_user) %>">Home</a></li>
+	<li class="dropdown">
+	  <a class="dropdown-toggle" data-toggle="dropdown" href="#">Accounts
+	  <span class="caret"></span></a>
+	  <ul class="dropdown-menu">
+	    <% @accounts.each do |acct| %>
+	      <li><a href="<%= account_path(acct) %>", data-turbolinks="false"><%= acct.accountName ? acct.accountName : acct.id %></a></li>
+	    <% end %>
+	  </ul>
+	</li>
+	<li><a href="#">Auto Bill Payments</a></li>
+	<li><a href="#">SMS</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-2 col-md-2 col-sm-12 col-sm-12 links">
+      <ul class="nav nav-stacked">
+	<li role="presentation" class="shift"><a href="<%= account_auto_bill_payments_path(@account.id) %>">View Auto Payments</a></li>
+	<li role="presentation" class="shift"><a href="<%= new_account_auto_bill_payment_url(:account_id => @account.id) %>">Create Auto Payment</a></li>  
+	<li role="presentation" class="shift"><a href="<%= account_sms_alerts_path(@account.id) %>">View SMS Alerts</a></li>
+	<li role="presentation" class="shift"><a href="<%= new_account_sms_alert_path(@account.id) %>">Create SMS Alert</a></li>  
+      </ul>
+    </div>
+    <div class="col-lg-10 col-md-10 col-sm-12">
+      <div class="row">
+	<div class="col-lg-5 col-md-5 col-sm-12">
+	  <h3>Creating SMS Alert for:<br /> <b><u><%= @account.accountName ? @account.accountName : @account.id %></u></b></h3><br />
+	  <%= render 'form' %>
+	</div>
+	  <div class="col-lg-5 col-md-5 col-sm-12">
+	  <p class="lead text-justify text-info">Here at Hidden Fees Bank we want you to be kept up to date with what is happening with your accounts. Choose from a triggered notification which will send an alert when a transaction is made based upon your criterea, or choose to get a regular update of your account balance. Reacurring notifications are sent out at 10:00AM</p>
+	</div>
+      </div>
+    </div>
+  </div>
+</div>
+<script> 
+  $('input[type=radio][name="sms_alert[alertType]"]').change(function() { 
+    // first: hide all the divs 
+    $('#alertType_1').css("display","none"); 
+    $('#alertType_2').css("display","none"); 
 
-<%= render 'form', sms_alert: @sms_alert %>
-
-<%= link_to 'Show', @sms_alert %> |
-<%= link_to 'Back', sms_alerts_path %>
+    // then get the div ID to show (i stored it in the "value" of the radio button 
+    var fieldToShow = $(this).val(); 
+    // now use jQuery selector and change the display setting of that field 
+    $("#" + fieldToShow).css("display","block"); 
+  }); 
+</script>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170430064904) do
+ActiveRecord::Schema.define(version: 20170501061359) do
 
   create_table "accounts", force: :cascade do |t|
     t.decimal  "balance"
@@ -61,12 +61,13 @@ ActiveRecord::Schema.define(version: 20170430064904) do
     t.integer  "alertType"
     t.integer  "frequency"
     t.integer  "account_id"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
     t.datetime "next_alert"
     t.integer  "trigger_criteria"
     t.decimal  "trigger_amount"
     t.string   "carrier"
+    t.integer  "phone",            limit: 10
     t.index ["account_id"], name: "index_sms_alerts_on_account_id"
   end
 

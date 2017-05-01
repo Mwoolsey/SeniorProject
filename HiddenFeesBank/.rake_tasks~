@@ -35,6 +35,7 @@ posts:delete_60_days_old
 restart
 routes
 secret
+sms_alert:run
 stats
 test
 test:db
