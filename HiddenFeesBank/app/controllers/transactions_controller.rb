@@ -30,20 +30,29 @@ class TransactionsController < ApplicationController
     # Check for any alerts that this transaction should trigger
     #------------------------------------------------------------------------------
     # get only the triggered alerts
+    alert_flag = false
     sms_alerts = @account.sms_alerts.select{|alert| alert.alertType == 1}.map{|alert| alert}
     sms_alerts.each do |alert|
       if alert.trigger_criteria == 1 # trigger on less than
-	if @transaction.amount.abs < alert.trigger_amount
-	  easy.deliver(alert.phone.to_s, alert.carrier, "Account Number: #{@account.id}\nTransaction Created:\nAmount: #{@transaction.amount}\nDescription: #{@transaction.description}")
-	end
+	@transaction.amount.abs < alert.trigger_amount ? alert_flag = true : alert_flag = false
       elsif alert.trigger_criteria == 2 # trigger on equal to
-	if @transaction.amount.abs == alert.trigger_amount
-	  easy.deliver(alert.phone.to_s, alert.carrier, "Account Number: #{@account.id}\nTransaction Created:\nAmount: #{@transaction.amount}\nDescription: #{@transaction.description}")
-	end
+	@transaction.amount.abs == alert.trigger_amount ? alert_flag = true : alert_flag = false
       else # trigger on greater than
-	if @transaction.amount.abs > alert.trigger_amount 
-	  easy.deliver(alert.phone.to_s, alert.carrier, "Account Number: #{@account.id}\nTransaction Created:\nAmount: #{@transaction.amount}\nDescription: #{@transaction.description}")
+	@transaction.amount.abs > alert.trigger_amount ? alert_flag = true : alert_flag = false
+      end
+      if alert_flag
+	# mask the Account number
+	masked_acct = "XXXX" + @account.id.to_s[5..8]
+
+	description = @transaction.description
+	# if the transaction was a debit, format it better for sms
+	if description != "Deposit"
+	  description = @transaction.description.split
+	  description.shift(2)
+	  description.delete_at(2)
+	  description = description.join(" ")
 	end
+	easy.deliver(alert.phone.to_s, alert.carrier, " Account alert\nAcct# #{masked_acct}\n#{description}\nAmount: #{@transaction.amount}\nBalance: $#{@account.balance.round(2)}\n")
       end
     end
   end

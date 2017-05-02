@@ -17,8 +17,8 @@ namespace :transactions do
     # transaction for
     while (@account = @accounts.sample).acctType == 1 do 
     end
-    @account = @accounts[36]
-    @amt = -1051.00;
+    #@account = @accounts[36]
+    #@amt = -2819.00;
     session.post "/accounts/#{@account.id}/transactions#create", { description: @transaction.description, amount: @amt, status: 'complete', account_id: @account.id, currentBalance: @account.balance + @amt, created_at: Time.now - 7.hours }
     puts "Transaction created for #{@account.user.name}: #{@account.id}, with an amount of #{@amt}"
   end
@@ -34,8 +34,8 @@ namespace :transactions do
     @accounts = Account.all
     @account = @accounts.sample
     @amt = rand_in_range(100.00, 800.00).round(2)
-    @account = Account.all[36]
-    @amt = 844.00
+    #@account = Account.all[36]
+    #@amt = 1844.00
     session.post "/accounts/#{@account.id}/transactions#create", { description: 'Deposit', amount: @amt, status: 'complete', account_id: @account.id, currentBalance: @account.balance + @amt, created_at: Time.now - 7.hours }
     puts "Transaction created for #{@account.user.name}: #{@account.id}, with an amount of #{@amt}"
   end

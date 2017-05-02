@@ -1,1 +1,1 @@
-SMSEasy::Client.config['from_address'] = "noreply@example.com"
+SMSEasy::Client.config['from_address'] = "noreply@HFB.com"
