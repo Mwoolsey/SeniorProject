@@ -1,5 +1,3 @@
-<p class="notice"><%= notice %></p>
-<p class="alert"><%= alert %></p>
 <div class="jumbotron">
 <div class="container">
   <div class="page-header">
@@ -24,7 +22,7 @@
 	  <span class="caret"></span></a>
 	  <ul class="dropdown-menu">
 	    <% @accounts.each do |acct| %>
-	      <li><a href="<%= account_path(acct) %>"><%= acct.id %></a></li>
+	      <li><a href="<%= account_path(acct) %>", data-turbolinks="false"><%= acct.accountName ? acct.accountName : acct.id %></a></li>
 	    <% end %>
 	  </ul>
 	</li>
@@ -49,4 +47,15 @@
     </div>
   </div>
 </div>
+<script>
+  $('input[type=radio][name=internalTransferType]').change(function() {
+    // first: hide all the divs 
+    $('#internalTransferType_1').css("display","none"); 
+    $('#internalTransferType_2').css("display","none"); 
 
+    // then get the div ID to show (i stored it in the "value" of the radio button 
+    var fieldToShow = $(this).val(); 
+    // now use jQuery selector and change the display setting of that field 
+    $("#" + fieldToShow).css("display","block"); 
+  });
+</script>

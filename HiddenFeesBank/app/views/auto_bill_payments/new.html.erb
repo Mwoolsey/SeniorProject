@@ -1,6 +1,4 @@
 <div class="jumbotron">
-<p class="notice"><%= notice %></p>
-<p class="alert"><%= alert %></p>
 <div class="container">
   <div class="page-header">
     <h1>Hidden Fees Bank</h1>
@@ -24,7 +22,7 @@
 	  <span class="caret"></span></a>
 	  <ul class="dropdown-menu">
 	    <% @accounts.each do |acct| %>
-	      <li><a href="<%= account_path(acct) %>"><%= acct.id %></a></li>
+	      <li><a href="<%= account_path(acct) %>", data-turbolinks="false"><%= acct.accountName ? acct.accountName : acct.id %></a></li>
 	    <% end %>
 	  </ul>
 	</li>
@@ -34,12 +32,21 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-lg-6 col-md-8 col-sm-12 col-sm-12">
+    <div class="col-lg-2 col-md-1 col-sm-12 col-sm-12 links">
+      <ul class="nav nav-stacked">
+	<li role="presentation" class="shift"><a href="<%= account_auto_bill_payments_path(@origin_acct.id) %>">View Auto Payments</a></li>
+	<li role="presentation" class="shift"><a href="<%= new_account_auto_bill_payment_url(:account_id => @origin_acct.id) %>">Create Auto Payment</a></li>  
+	<li role="presentation" class="shift"><a href="<%= transfers_path(:account_id => @origin_acct.id, :current_user => current_user) %>">Transfer Funds</a></li>
+	<li role="presentation" class="shift"><a href="<%= account_sms_alerts_path(@origin_acct) %>">View SMS Alerts</a></li>
+	<li role="presentation" class="shift"><a href="<%= new_account_sms_alert_path(@origin_acct.id) %>">Create SMS Alert</a></li>  
+      </ul>
+    </div>
+    <div class="col-lg-5 col-md-5 col-sm-12 col-sm-12">
       <h2>Creating Automatic Bill Payment</h2>
       <%= render 'form' %>
       <%= link_to 'Back', account_path(@origin_acct.id) %>
     </div>
-    <div class="col-lg-6 col-md-4 col-sm-12 col-sm-12">
+    <div class="col-lg-5 col-md-5 col-sm-12 col-sm-12">
       <p class="lead">We know that paying bills can be a pain, so we try and make it as easy as possible. Choose a business from the approved business list and create the start time with a frequency of payment.</p>
       <img src="<%= asset_path 'bills-everywhere.jpeg' %>" class="img-fluid" alt="Responsive image">
     </div>

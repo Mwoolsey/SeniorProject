@@ -11,6 +11,18 @@
     </div>
   <% end %>
 
+  <div class="field">
+    <b>Choose one:</b><br />
+    <input type="radio" name"internalTransferType" value="internalTransferType_1">One of my accounts<br />
+    <input type="radio" name"internalTransferType" value="internalTransferType_2">A different HFB account<br />
+  </div>
+  <div id="internalTransferType_1">
+    Type 1
+  </div>
+  <div id="internalTransferType_2">
+    Type 2
+  </div>
+
   <table>
 
     <tr>
@@ -27,10 +39,10 @@
     <tr>
       <div class="field">
 	<td>
-	  <%= label_tag :myAccountNumber, "My Accounts" %>
+    <%= label_tag :myAccountNumber, "My Accounts" %>
 	</td>
 	<td>
-	  <%= f.select(:destinationAcctNumber, @my_other_accounts.map {|acct| [acct.id,acct.id]}, :prompt => "Select an Account") %>
+    <%= f.select(:destinationAcctNumber, @my_other_accounts.map {|acct| [acct.id,acct.id]}, :prompt => "Select an Account") %>
 	</td>
       </div>
     </tr>
