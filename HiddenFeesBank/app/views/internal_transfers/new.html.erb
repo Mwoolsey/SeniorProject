@@ -43,7 +43,6 @@
     </div>
     <div class="col-lg-10 col-md-11 col-sm-12 col-sm-12">
       <%= render 'form', internal_transfer: @internal_transfer %>
-      <a class="btn btn-default" href="<%= account_path(@account) %>">Back to Account</a>
     </div>
   </div>
 </div>
@@ -55,6 +54,14 @@
 
     // then get the div ID to show (i stored it in the "value" of the radio button 
     var fieldToShow = $(this).val(); 
+    if (fieldToShow === 'internalTransferType_1')
+    {
+      $('#internalTransferType_2').children('input').val('');
+    }
+    else
+    {
+      $('#internalTransferType_1').prop('Select an Account', 0);
+    }
     // now use jQuery selector and change the display setting of that field 
     $("#" + fieldToShow).css("display","block"); 
   });

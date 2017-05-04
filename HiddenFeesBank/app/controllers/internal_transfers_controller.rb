@@ -16,16 +16,14 @@ class InternalTransfersController < ApplicationController
   # POST /internal_transfers.json
   def create
     yikes
-    @internal_transfer = InternalTransfer.new(internal_transfer_params)
+    # can delete originAcctNumber from model since account_id takes care of it
+    # need to check validity
+    @internal_transfer = @account.internal_transfers.new(internal_transfer_params)
 
-    respond_to do |format|
-      if @internal_transfer.save
-        format.html { redirect_to @internal_transfer, notice: 'Internal transfer was successfully created.' }
-        format.json { render :show, status: :created, location: @internal_transfer }
-      else
-        format.html { render :new }
-        format.json { render json: @internal_transfer.errors, status: :unprocessable_entity }
-      end
+    if @internal_transfer.save
+      redirect_to @account, notice: 'Transfer was successfully created.'
+    else
+      render :new
     end
   end
 
@@ -37,6 +35,6 @@ class InternalTransfersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def internal_transfer_params
-      params.require(:internal_transfer).permit(:originAcctNumber, :destinationAcctNumber, :amount, :account_id, :myAccountNumber)
+      params.require(:internal_transfer).permit(:originAcctNumber, :destinationAcctNumber, :amount, :account_id, :internalTransferType)
     end
 end

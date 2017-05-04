@@ -13,57 +13,28 @@
 
   <div class="field">
     <b>Choose one:</b><br />
-    <input type="radio" name"internalTransferType" value="internalTransferType_1">One of my accounts<br />
-    <input type="radio" name"internalTransferType" value="internalTransferType_2">A different HFB account<br />
+    <input type="radio" name="internalTransferType" value="internalTransferType_1">One of my accounts<br />
+    <input type="radio" name="internalTransferType" value="internalTransferType_2">A different HFB account<br />
   </div>
   <div id="internalTransferType_1">
-    Type 1
+    <%= label_tag :myAccountNumber, "My Accounts" %>
+    <%= f.select(:destinationAcctNumber, @my_other_accounts.map {|acct| [acct.id,acct.id]}, :prompt => "Select an Account") %>
   </div>
   <div id="internalTransferType_2">
-    Type 2
+    <%= f.label "Destination Account Number" %>
+    <%= f.number_field :destinationAcctNumber %>
   </div>
 
-  <table>
 
-    <tr>
-      <div class="field">
-	<td>
-	  <%= f.label "Destination Account Number" %>
-	</td>
-	<td>
-	  <%= f.number_field :destinationAcctNumber %>
-	</td>
-      </div>
-    </tr>
+  <div class="field">
+    <br />
+    <%= f.label :amount %>
+    <%= f.text_field :amount %>
+  </div>
 
-    <tr>
-      <div class="field">
-	<td>
-    <%= label_tag :myAccountNumber, "My Accounts" %>
-	</td>
-	<td>
-    <%= f.select(:destinationAcctNumber, @my_other_accounts.map {|acct| [acct.id,acct.id]}, :prompt => "Select an Account") %>
-	</td>
-      </div>
-    </tr>
-
-    <tr>
-      <div class="field">
-	<td>
-	  <%= f.label :amount %>
-	</td>
-	<td>
-	  <%= f.text_field :amount %>
-	</td>
-      </div>
-    </tr>
-
-    <tr>
-      <td>
-	<div class="actions">
-	  <%= f.submit %>
-	</div>
-      </td>
-    </tr>
-  </table>
+  <div class="actions">
+    <br />
+    <%= f.submit class: 'btn btn-default' %>
+    <a class="btn btn-default" href="<%= account_path(@account) %>">Back to Account</a>
+  </div>
 <% end %>
