@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170501061359) do
+ActiveRecord::Schema.define(version: 20170505025457) do
 
   create_table "accounts", force: :cascade do |t|
     t.decimal  "balance"
@@ -37,7 +37,6 @@ ActiveRecord::Schema.define(version: 20170501061359) do
   end
 
   create_table "internal_transfers", force: :cascade do |t|
-    t.integer  "originAcctNumber"
     t.integer  "destinationAcctNumber"
     t.decimal  "amount"
     t.integer  "account_id"
@@ -47,7 +46,6 @@ ActiveRecord::Schema.define(version: 20170501061359) do
   end
 
   create_table "outgoing_transfers", force: :cascade do |t|
-    t.integer  "originAcctNumber"
     t.integer  "destinationAcctNumber"
     t.integer  "routingNumber"
     t.decimal  "amount"

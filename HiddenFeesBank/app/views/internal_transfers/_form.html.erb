@@ -11,14 +11,16 @@
     </div>
   <% end %>
 
+  <p class="small">Transferring from Account Number:&nbsp<u><%= @account.id %></u>
   <div class="field">
     <b>Choose one:</b><br />
     <input type="radio" name="internalTransferType" value="internalTransferType_1">One of my accounts<br />
     <input type="radio" name="internalTransferType" value="internalTransferType_2">A different HFB account<br />
   </div>
+
   <div id="internalTransferType_1">
     <%= label_tag :myAccountNumber, "My Accounts" %>
-    <%= f.select(:destinationAcctNumber, @my_other_accounts.map {|acct| [acct.id,acct.id]}, :prompt => "Select an Account") %>
+    <%= f.select(:myAccountNumber, @my_other_accounts.map {|acct| [acct.id,acct.id]}, :prompt => "Select an Account") %>
   </div>
   <div id="internalTransferType_2">
     <%= f.label "Destination Account Number" %>

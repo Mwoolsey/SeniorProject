@@ -27,10 +27,12 @@ db:structure:load
 db:version
 dev:cache
 initializers
+internal_transfers:run
 log:clear
 middleware
 notes
 notes:custom
+outgoing_transfers:run
 posts:delete_60_days_old
 restart
 routes

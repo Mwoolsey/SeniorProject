@@ -1,5 +1,68 @@
-<h1>New Outgoing Transfer</h1>
+<div class="jumbotron">
+<div class="container">
+  <div class="page-header">
+    <h1>Hidden Fees Bank</h1>
+    <!-- Devise alerts -->
+    <div id="user_nav">
+      <% if user_signed_in? %>
+      Signed in as <%= current_user.email %>. Not you?
+      <%= link_to "Sign out", destroy_user_session_path, method: :delete %>
+      <% else %>
+      <%= link_to "Sign up", new_user_registration_path %> or
+      <%= link_to "Sign in", new_user_session_path %>
+      <% end %>
+    </div>
+  </div>
+  <div class="navbar navbar-inverse">
+    <div class="container-fluid">
+      <ul class="nav navbar-nav">
+	<li><a href="<%= user_path(current_user) %>">Home</a></li>
+	<li class="dropdown">
+	  <a class="dropdown-toggle" data-toggle="dropdown" href="#">Accounts
+	  <span class="caret"></span></a>
+	  <ul class="dropdown-menu">
+	    <% @accounts.each do |acct| %>
+	      <li><a href="<%= account_path(acct) %>", data-turbolinks="false"><%= acct.accountName ? acct.accountName : acct.id %></a></li>
+	    <% end %>
+	  </ul>
+	</li>
+	<li><a href="#">Auto Bill Payments</a></li>
+	<li><a href="#">SMS</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-2 col-md-1 col-sm-12 col-sm-12 links">
+      <ul class="nav nav-stacked">
+	<li role="presentation" class="shift"><a href="<%= account_auto_bill_payments_path(@account.id) %>">View Auto Payments</a></li>
+	<li role="presentation" class="shift"><a href="<%= new_account_auto_bill_payment_url(:account_id => @account.id) %>">Create Auto Payment</a></li>  
+	<li role="presentation" class="shift"><a href="<%= transfers_path(:account_id => @account.id, :current_user => current_user) %>">Transfer Funds</a></li>
+	<li role="presentation" class="shift"><a href="<%= account_sms_alerts_path(@account) %>">View SMS Alerts</a></li>
+	<li role="presentation" class="shift"><a href="<%= new_account_sms_alert_path(@account.id) %>">Create SMS Alert</a></li>  
+      </ul>
+    </div>
+    <div class="col-lg-10 col-md-11 col-sm-12 col-sm-12">
+      <%= render 'form', outgoing_transfer: @outgoing_transfer %>
+    </div>
+  </div>
+</div>
+<script>
+  $('input[type=radio][name=internalTransferType]').change(function() {
+    // first: hide all the divs 
+    $('#internalTransferType_1').css("display","none"); 
+    $('#internalTransferType_2').css("display","none"); 
 
-<%= render 'form', outgoing_transfer: @outgoing_transfer %>
-
-<%= link_to 'Back', outgoing_transfers_path %>
+    // then get the div ID to show (i stored it in the "value" of the radio button 
+    var fieldToShow = $(this).val(); 
+    if (fieldToShow === 'internalTransferType_1')
+    {
+      $('#internalTransferType_2').children('input').val('');
+    }
+    else
+    {
+      $('#internalTransferType_1').prop('Select an Account', 0);
+    }
+    // now use jQuery selector and change the display setting of that field 
+    $("#" + fieldToShow).css("display","block"); 
+  });
+</script>

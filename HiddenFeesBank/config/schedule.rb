@@ -39,3 +39,12 @@ end
 every 1.hour do
   rake "posts:delete_60_days_old"
 end
+
+every 1.minute do
+  rake "internal_transfers:run"
+end
+
+every 5.minute do
+  rake "outgoing_transfers:run"
+end
+

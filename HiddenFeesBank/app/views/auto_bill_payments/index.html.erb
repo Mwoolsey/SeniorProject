@@ -38,7 +38,7 @@
 	<li role="presentation" class="shift"><a href="<%= new_account_auto_bill_payment_url(:account_id => @origin_acct.id) %>">Create Auto Payment</a></li>  
 	<li role="presentation" class="shift"><a href="<%= transfers_path(:account_id => @origin_acct.id, :current_user => current_user) %>">Transfer Funds</a></li>
 	<li role="presentation" class="shift"><a href="<%= account_sms_alerts_path(@origin_acct) %>">View SMS Alerts</a></li>
-	<li role="presentation" class="shift"><a href="#">Create SMS Alert</a></li>  
+	<li role="presentation" class="shift"><a href="<%= new_account_sms_alert_path(@origin_acct.id) %>">Create SMS Alert</a></li>  
       </ul>
     </div>
     <div class="col-lg-10 col-md-11 col-sm-12 col-sm-12">

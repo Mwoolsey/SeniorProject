@@ -8,17 +8,26 @@ class InternalTransfersController < ApplicationController
     @internal_transfer = @account.internal_transfers.new
   end
 
-  # GET /internal_transfers/1/edit
-  def edit
-  end
-
   # POST /internal_transfers
   # POST /internal_transfers.json
   def create
-    yikes
-    # can delete originAcctNumber from model since account_id takes care of it
-    # need to check validity
-    @internal_transfer = @account.internal_transfers.new(internal_transfer_params)
+
+    if params[:internalTransferType] == 'internalTransferType_1' # transfer to one of my accounts
+      destinationAcctNumber = params[:internal_transfer][:myAccountNumber]
+    else
+      destinationAcctNumber = params[:internal_transfer][:destinationAcctNumber]
+      # check that account exists
+      if !Account.exists?(destinationAcctNumber)
+	redirect_to controller: 'internal_transfers', action: 'new', account_id: @account.id, alert: "Could not locate Account Number: #{destinationAcctNumber}"
+	return
+      end
+    end
+    amount = params[:internal_transfer][:amount]
+    @internal_transfer = @account.internal_transfers.new ({
+      :destinationAcctNumber => destinationAcctNumber,
+      :amount => amount,
+      :account_id => @account.id
+    })
 
     if @internal_transfer.save
       redirect_to @account, notice: 'Transfer was successfully created.'
@@ -35,6 +44,6 @@ class InternalTransfersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def internal_transfer_params
-      params.require(:internal_transfer).permit(:originAcctNumber, :destinationAcctNumber, :amount, :account_id, :internalTransferType)
+      params.require(:internal_transfer).permit(:myAccountNumber, :destinationAcctNumber, :amount, :account_id, :internalTransferType)
     end
 end

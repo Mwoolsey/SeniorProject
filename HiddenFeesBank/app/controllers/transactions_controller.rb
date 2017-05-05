@@ -18,13 +18,12 @@ class TransactionsController < ApplicationController
   def create
 
     easy = SMSEasy::Client.new
-    #easy.deliver("5305929957", "at&t", "It worked!!!!!")
 
     @transaction = @account.transactions.new({:description => params[:description], :amount => params[:amount], :status => params[:status], :account_id => params[:account_id], :currentBalance => params[:currentBalance], :created_at => params[:created_at]})
     if @transaction.save
       @account.update_attribute :balance, @account.balance + params[:amount].to_f
     else
-      puts "Error saving transaction"
+      return 
     end
     #------------------------------------------------------------------------------
     # Check for any alerts that this transaction should trigger
