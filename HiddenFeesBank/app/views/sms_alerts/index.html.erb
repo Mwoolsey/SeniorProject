@@ -16,7 +16,7 @@
   <div class="navbar navbar-inverse">
     <div class="container-fluid">
       <ul class="nav navbar-nav">
-	<li><a href="<%= user_path(current_user) %>">Home</a></li>
+	<li><a href="<%= root_path %>">Home</a></li>
 	<li class="dropdown">
 	  <a class="dropdown-toggle" data-toggle="dropdown" href="#">Accounts
 	  <span class="caret"></span></a>
@@ -79,8 +79,8 @@
 		<% end %>
 		<td><%= alert.trigger_amount %></td>
 		<td><%= alert.phone %></td>
-		<td><%= link_to 'edit', edit_account_sms_alert_path(alert, :account_id => @account.id) %></td>
-		<td><%= link_to 'delete', account_sms_alert_path(:id => alert.id), method: :delete, data: { confirm: 'Are you sure?' } %> </td>
+		<td><%= link_to 'Edit', edit_account_sms_alert_path(alert, :account_id => @account.id) %></td>
+		<td><%= link_to 'Delete', account_sms_alert_path(:id => alert.id), method: :delete, data: { confirm: 'Are you sure?' } %> </td>
 	      </tr>
 	    <% end %>
 	  <% end %>

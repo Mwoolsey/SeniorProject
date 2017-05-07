@@ -22,7 +22,8 @@
 	  Checking
 	<% end %>
       </th>
-    </tr>
+    </tr><br /><br />
+      <a class="btn btn-default" href="<%= account_transactions_path(:account_id => @account.id) %>">View Full Transaction History</a>
 </div>
 <div class="table-responsive">
   <table class="table table-hover table-striped table-bordered smallTxt">

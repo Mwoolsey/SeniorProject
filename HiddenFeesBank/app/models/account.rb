@@ -14,7 +14,6 @@ end
 #-------------------------------------------------------------------------------
 
 class Account < ApplicationRecord
-  belongs_to :user
   has_many :users, through: :user_accounts
   has_many :user_accounts
   has_many :auto_bill_payments

@@ -45,7 +45,7 @@ class TransactionsController < ApplicationController
 
 	description = @transaction.description
 	# if the transaction was a debit, format it better for sms
-	if description != "Deposit"
+	if description != "Deposit" or !description.include? "Transfer"
 	  description = @transaction.description.split
 	  description.shift(2)
 	  description.delete_at(2)

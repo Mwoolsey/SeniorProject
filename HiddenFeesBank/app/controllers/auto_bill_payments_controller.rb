@@ -5,7 +5,6 @@ class AutoBillPaymentsController < ApplicationController
   # GET /auto_bill_payments
   # GET /auto_bill_payments.json
   def index
-    @accounts = current_user.accounts
     @auto_bill_payments = @origin_acct.auto_bill_payments.sort {|a,b| a.dateToPay <=> b.dateToPay}
   end
 
@@ -16,14 +15,13 @@ class AutoBillPaymentsController < ApplicationController
 
   # GET /auto_bill_payments/new
   def new
-    @accounts = current_user.accounts
     @auto_bill_payment = @origin_acct.auto_bill_payments.new
     @businesses = $business_transactions
   end
 
   # GET /auto_bill_payments/1/edit
   def edit
-
+    @businesses = $business_transactions
   end
 
   # POST /auto_bill_payments
@@ -49,23 +47,18 @@ class AutoBillPaymentsController < ApplicationController
   # PATCH/PUT /auto_bill_payments/1
   # PATCH/PUT /auto_bill_payments/1.json
   def update
-    respond_to do |format|
       if @auto_bill_payment.update(auto_bill_payment_params)
-        format.html { redirect_to @auto_bill_payment, notice: 'Auto bill payment was successfully updated.' }
+        redirect_to account_auto_bill_payments_path, notice: 'Auto bill payment was successfully updated.'
       else
-        format.html { render :edit }
+        render :edit 
       end
-    end
   end
 
   # DELETE /auto_bill_payments/1
   # DELETE /auto_bill_payments/1.json
   def destroy
     @auto_bill_payment.destroy
-    respond_to do |format|
-      format.html { redirect_to auto_bill_payments_url, notice: 'Auto bill payment was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+      redirect_to account_auto_bill_payments_url, notice: 'Auto bill payment was successfully destroyed.'
   end
 
   private
@@ -76,6 +69,7 @@ class AutoBillPaymentsController < ApplicationController
     
     def set_account
       @origin_acct = Account.find(params[:account_id])
+      @accounts = current_user.accounts
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

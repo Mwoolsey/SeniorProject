@@ -16,7 +16,7 @@
   <div class="navbar navbar-inverse">
     <div class="container-fluid">
       <ul class="nav navbar-nav">
-	<li><a href="<%= user_path(current_user) %>">Home</a></li>
+	<li><a href="<%= root_path %>">Home</a></li>
 	<li class="dropdown">
 	  <a class="dropdown-toggle" data-toggle="dropdown" href="#">Accounts
 	  <span class="caret"></span></a>
@@ -64,8 +64,8 @@
 		<td><%= auto_bill_payment.dateToPay %></td>
 		<td><%= auto_bill_payment.frequency %></td>
 		<td><%= auto_bill_payment.account.id %></td>
-		<td><%= link_to 'Edit', edit_auto_bill_payment_path(auto_bill_payment, :account_id => auto_bill_payment.account.id) %></td>
-		<td><%= link_to 'Destroy', auto_bill_payment, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+		<td><%= link_to 'Edit', edit_account_auto_bill_payment_path(auto_bill_payment, :account_id => auto_bill_payment.account.id) %></td>
+		<td><%= link_to 'Destroy', account_auto_bill_payment_path(:id => auto_bill_payment.id), method: :delete, data: { confirm: 'Are you sure?' } %></td>
 	      </tr>
 	    <% end %>
 	</table>

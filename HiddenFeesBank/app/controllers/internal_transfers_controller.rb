@@ -18,7 +18,7 @@ class InternalTransfersController < ApplicationController
       destinationAcctNumber = params[:internal_transfer][:destinationAcctNumber]
       # check that account exists
       if !Account.exists?(destinationAcctNumber)
-	redirect_to controller: 'internal_transfers', action: 'new', account_id: @account.id, alert: "Could not locate Account Number: #{destinationAcctNumber}"
+	redirect_to new_account_internal_transfer_url, account_id: @account.id, alert: "Could not locate Account Number: #{destinationAcctNumber}"
 	return
       end
     end

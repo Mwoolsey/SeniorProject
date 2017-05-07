@@ -37,6 +37,6 @@ namespace :transactions do
     #@account = Account.all[36]
     #@amt = 1844.00
     session.post "/accounts/#{@account.id}/transactions#create", { description: 'Deposit', amount: @amt, status: 'complete', account_id: @account.id, currentBalance: @account.balance + @amt, created_at: Time.now - 7.hours }
-    puts "Transaction created for #{@account.user.name}: #{@account.id}, with an amount of #{@amt}"
+    #puts "Transaction created for #{@account.user.name}: #{@account.id}, with an amount of #{@amt}"
   end
 end

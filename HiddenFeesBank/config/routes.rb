@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
 
-  devise_for :users 
+  devise_for :users, controllers: { registrations: 'users/registrations' }
   devise_scope :user do
     authenticated :user do
       root 'users#show'
@@ -18,7 +18,7 @@ Rails.application.routes.draw do
     resources :outgoing_transfers, shallow: true
     resources :user_accounts, shallow: true
     resources :internal_transfers, shallow: true
-    resources :auto_bill_payments, shallow: true
+    resources :auto_bill_payments
     resources :transactions, shallow: true
   end
 
